@@ -1,5 +1,5 @@
 # Firewall
 # ========
-class shorwall::base {
+class shorewall::base {
 	package { "shorewall": ensure => installed }
 }

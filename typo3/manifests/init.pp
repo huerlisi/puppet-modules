@@ -2,5 +2,5 @@
 # =====
 
 class typo3::webapp {
-	package {"typo3-src": ensure => installed }
+	package {"typo3": ensure => installed }
 }

@@ -2,6 +2,17 @@
 # =====
 class mysql::server {
         package {"mysql-server": ensure => installed }
+	service {"mysql":
+		ensure  => running,
+		require => Package["mysql-server"]
+	}
+
+	file {"/etc/mysql/conf.d/bind-extern.cnf":
+		ensure  => present,
+		content => template("mysql/etc/mysql/conf.d/bind-extern.cnf"),
+		require => Package["mysql-server"],
+		notify  => Service["mysql"]
+	}
 }
 
 class mysql::client {

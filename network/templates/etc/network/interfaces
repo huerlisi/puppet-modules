@@ -1,0 +1,19 @@
+# Network Interfaces
+# ==================
+
+# Loopback
+# ========
+auto lo
+iface lo inet loopback
+
+# Primary
+# =======
+auto eth0
+iface eth0 inet static
+	# Address
+	address <%= host_address %>
+	gateway <%= network_gateway %>
+	netmask <%= network_netmask %>
+
+	# DNS
+	dns-nameservers <%= network_nameservers %>

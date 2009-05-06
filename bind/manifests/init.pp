@@ -8,6 +8,10 @@ class bind::server {
 		ensure  => running,
 		require => Package["bind9"]
 	}
+
+	file {"/etc/bind/zones.d":
+		ensure => directory
+	}
 }
 
 # Forwarding Proxy
@@ -20,4 +24,9 @@ class bind::proxy {
 		content => template("bind/etc/bind/named.conf.options"),
 		notify  => Service["bind9"]
 	}
+}
+
+# Master Zone
+# ===========
+define bind::zone::master() {
 }

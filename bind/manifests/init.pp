@@ -9,3 +9,15 @@ class bind::server {
 		require => Package["bind9"]
 	}
 }
+
+# Forwarding Proxy
+# ================
+class bind::proxy {
+	include server
+
+	file {"/etc/bind/named.conf.options":
+		ensure  => present,
+		content => template("bind/etc/bind/named.conf.options"),
+		notify  => Service["bind9"]
+	}
+}

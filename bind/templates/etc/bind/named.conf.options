@@ -1,0 +1,12 @@
+// Bind Options
+// ============
+options {
+        directory "/var/cache/bind";
+
+        forwarders {
+                <%= dns_forwarders.map{|forwarder| forwarder + ';' } %>
+        };
+
+        auth-nxdomain no;    # conform to RFC1035
+        listen-on-v6 { any; };
+};

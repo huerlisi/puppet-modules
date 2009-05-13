@@ -1,5 +1,5 @@
 # Firewall
 # ========
 class shorewall::daemon {
-	package { "shorewall": ensure => installed }
+	package { "shorewall-perl": ensure => installed }
 }

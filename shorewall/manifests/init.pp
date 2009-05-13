@@ -1,5 +1,5 @@
 # Firewall
 # ========
-class shorewall::base {
+class shorewall::daemon {
 	package { "shorewall": ensure => installed }
 }

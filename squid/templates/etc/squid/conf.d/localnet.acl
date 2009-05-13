@@ -1,0 +1,2 @@
+# Allow access from local networks
+http_access allow localnet

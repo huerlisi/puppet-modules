@@ -7,4 +7,10 @@ class squid::server {
 		ensure  => running,
 		require => Package["squid"]
 	}
+
+	file {"/etc/squid/squid.conf":
+		content => template("squid/etc/squid/squid.conf"),
+		notify  => Service["squid"],
+		require => Package["squid"]
+	}
 }

@@ -17,3 +17,4 @@ iface eth0 inet static
 
 	# DNS
 	dns-nameservers <%= network_nameservers %>
+	dns-search <%= network_search %>

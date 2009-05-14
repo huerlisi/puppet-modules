@@ -1,6 +1,6 @@
 # Nullmailer
 # ==========
-class nullmailer::client {
+class nullmailer::server {
         package {"nullmailer": ensure => installed }
 
         file { "/etc/nullmailer/remotes":

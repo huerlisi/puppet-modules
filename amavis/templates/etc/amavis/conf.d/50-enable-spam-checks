@@ -1,0 +1,7 @@
+use strict;
+
+# Default SPAM checking mode
+@bypass_spam_checks_maps = (
+   \%bypass_spam_checks, \@bypass_spam_checks_acl, \$bypass_spam_checks_re);
+
+1;  # ensure a defined return

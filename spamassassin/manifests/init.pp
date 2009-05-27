@@ -13,5 +13,10 @@ class spamassassin::daemon {
 		content => template("spamassassin/etc/default/spamassassin"),
 		notify  => Service["spamassassin"]
 	}
+
+	include helpers
 }
 
+class spamassassin::helpers {
+	package {["razor", "pyzor"]: ensure => installed}
+}

@@ -40,4 +40,6 @@ ACCEPT		$FW		loc		icmp
 ACCEPT		$FW		net		icmp
 #
 
+<%= shorewall_rules %>
+
 #LAST LINE -- ADD YOUR ENTRIES BEFORE THIS ONE -- DO NOT REMOVE

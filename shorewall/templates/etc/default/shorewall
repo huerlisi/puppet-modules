@@ -1,7 +1,7 @@
 # prevent startup with default configuration
 # set the following varible to 1 in order to allow Shorewall to start
 
-startup=0
+startup=1
 
 # if your Shorewall configuration requires detection of the ip address of a
 # ppp

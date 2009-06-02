@@ -1,0 +1,7 @@
+Acquire                                                                                                                                                                            
+{                                                                                                                                                                                  
+  http
+  {   
+    Proxy "http://<%= proxy_server_fqdn %>:3128";
+  }
+}

@@ -10,7 +10,7 @@ class network::interfaces {
 	} else {
 		file {"/etc/network/interfaces":
 			ensure  => present,
-			content => template("network/etc/network/interfaces")
+			content => template("zone_$zone/etc/network/interfaces")
 		}
 	}
 }

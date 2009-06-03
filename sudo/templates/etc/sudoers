@@ -6,6 +6,7 @@
 #
 
 Defaults        env_reset
+Defaults        env_keep+="http_proxy https_proxy ftp_proxy ftps_proxy"
 
 # Host alias specification
 

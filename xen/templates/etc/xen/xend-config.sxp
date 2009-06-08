@@ -120,7 +120,7 @@
 #
 # use
 #
-(network-script network-dmz-bridge)
+(network-script <%= xen_network_script %>)
 #
 # Your default ethernet device is used as the outgoing interface, by default. 
 # To use a different one (e.g. eth1) use

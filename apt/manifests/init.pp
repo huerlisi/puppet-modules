@@ -1,9 +1,14 @@
 # APT
 # ===
 class apt::client {
-	file {"/etc/apt/apt.conf.d/proxy":
-		content => template("apt/etc/apt/apt.conf.d/proxy")
+	if $proxy_server_fqdn {
+		file {"/etc/apt/apt.conf.d/proxy":
+			content => template("apt/etc/apt/apt.conf.d/proxy")
+		}
+	} else {
+		file {"/etc/apt/apt.conf.d/proxy": ensure => absent }
 	}
+
 	file {"/etc/apt/apt.conf.d/no-install-recommends":
 		content => template("apt/etc/apt/apt.conf.d/no-install-recommends")
 	}

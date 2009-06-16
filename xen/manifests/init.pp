@@ -23,4 +23,7 @@ class xen::dom0 {
                 require => Package["xen-utils-common"],
                 notify  => Service["xend"]
         }
+
+	# Workaround for Debian Bug #519064 (http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519064)
+	file { "/var/lib/xen/save": ensure => directory }
 }

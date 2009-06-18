@@ -11,19 +11,19 @@ class xen::tools {
 
 class xen::dom0 {
         include xen::tools
-        package { ["xen-utils-common", "xen-hypervisor-i386", "linux-image-xen-686"]: ensure => installed }
+        package { ["xen-utils", "xen-hypervisor-i386", "linux-image-xen-686"]: ensure => installed }
 
         service {"xend":
                 ensure  => running,
-                require => Package["xen-utils-common"]
+                require => Package["xen-utils"]
         }
 
         file { "/etc/xen/xend-config.sxp":
                 content => template("xen/etc/xen/xend-config.sxp"),
-                require => Package["xen-utils-common"],
+                require => Package["xen-utils"],
                 notify  => Service["xend"]
         }
 
 	# Workaround for Debian Bug #519064 (http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519064)
-	file { "/var/lib/xen/save": ensure => directory }
+	file { ["/var/lib/xen/", "/var/lib/xen/save"]: ensure => directory }
 }

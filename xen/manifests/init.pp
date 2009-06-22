@@ -27,6 +27,10 @@ class xen::dom0 {
                 require => Package["xen-utils"]
         }
 
+	case $xen_network_script {
+		'network-bridge': { package {"bridge-utils": ensure => installed} }
+	}
+
         file { "/etc/xen/xend-config.sxp":
                 content => template("xen/etc/xen/xend-config.sxp"),
                 require => Package["xen-utils"],

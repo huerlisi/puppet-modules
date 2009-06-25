@@ -1,14 +1,5 @@
 # Xen
 # ===
-class xen::tools {
-        package { "xen-tools": ensure => installed }
-
-        file { "/etc/xen-tools/xen-tools.conf":
-                content => template('xen/etc/xen-tools/xen-tools.conf'),
-                require => Package["xen-tools"]
-        }
-}
-
 class xen::domU {
 	service {"procps": ensure => running }
 
@@ -19,7 +10,7 @@ class xen::domU {
 }
 
 class xen::dom0 {
-        include xen::tools
+        include xen-tools
         package { ["xen-utils", "xen-hypervisor-i386", "linux-image-xen-686"]: ensure => installed }
 
         service {"xend":

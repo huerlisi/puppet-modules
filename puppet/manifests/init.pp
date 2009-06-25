@@ -1,6 +1,8 @@
 # Puppet
 # ======
 class puppet::server {
+	include git::client
+
 	package { "puppetmaster": ensure => installed }
 	service { "puppetmaster":
 		ensure  => running,

@@ -10,6 +10,7 @@ class xen::xen-tools {
 
         file { "/etc/xen-tools/role.d/puppet":
                 content => template('xen/etc/xen-tools/role.d/puppet'),
+		mode    => '755',
                 require => Package["xen-tools"]
         }
 }

@@ -3,7 +3,7 @@
 # Currently only KDE
 
 class desktop::kde {
-	package {"kde": ensure => installed}
+	package {["kde", "kde-i18n-de"]: ensure => installed}
 }
 
 class desktop::office {
@@ -20,5 +20,9 @@ class desktop::netbook {
 
 class desktop::ltsp {
 	include desktop::kde
+        package {["openoffice.org", "openoffice.org-help-de", "openoffice.org-hyphenation-de", "openoffice.org-kde", "openoffice.org-l10n-de", "openoffice.org-thesaurus-de-ch"]: ensure => installed}
+        package {["iceweasel", "iceweasel-l10n-de"]: ensure => installed}
+        package {"konversation": ensure => installed}
+	package {["icedove", "icedove-l10n-de"]: ensure => installed}
 }
 

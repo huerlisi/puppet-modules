@@ -1,7 +1,7 @@
 # APT
 # ===
 class apt::client {
-	if $proxy_server_fqdn {
+	if $proxy_server_url {
 		file {"/etc/apt/apt.conf.d/proxy":
 			content => template("apt/etc/apt/apt.conf.d/proxy")
 		}

@@ -1,8 +1,1 @@
-<%
-if proxy_server_port.nil?
-  a = '3128'
-else
-  a = proxy_server_port
-end
--%>
-export http_proxy="http://<%= proxy_server_fqdn %>:<%= a %>"
+export http_proxy="<%= proxy_server_url %>"

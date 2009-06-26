@@ -1,9 +1,2 @@
-<%
-if proxy_server_port.nil?
-  a = '3128'
-else
-  a = proxy_server_port
-end
--%>
-Acquire::http::Proxy "http://<%= proxy_server_fqdn %>:<%= a %>";
+Acquire::http::Proxy "<%= proxy_server_url %>";
 

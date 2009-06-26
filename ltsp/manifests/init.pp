@@ -8,4 +8,6 @@ class ltsp::server {
 		path    => ["/usr/local/sbin", "/usr/local/bin", "/usr/sbin", "/usr/bin", "/sbin", "/bin"],
 		timeout => '-1'
 	}
+
+	include desktop::ltsp
 }

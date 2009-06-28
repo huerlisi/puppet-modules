@@ -1,0 +1,14 @@
+# Primary
+# =======
+auto <%= iface_name %>
+iface <%= iface_name %> inet static
+	# Address
+	address <%= iface_address %>
+	gateway <%= iface_gateway %>
+	netmask <%= iface_netmask %>
+
+	# DNS
+	dns-nameservers <%= iface_nameservers %>
+	dns-search <%= iface_search %>
+
+	<%= iface_options %>

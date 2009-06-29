@@ -1,7 +1,7 @@
 # Xen
 # ===
 class xen::domU {
-	service {"procps": ensure => running }
+	service {"procps": alias => sysctl}
 
 	case $lsbdistcodename {
 		'hardy': {}

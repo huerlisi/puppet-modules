@@ -1,5 +1,9 @@
 # LDAP
 # ====
+class ldap::utils {
+	package {"ldap-utils": ensure => installed}
+}
+
 class ldap::server {
         package {"slapd": ensure => installed}
 
@@ -7,4 +11,7 @@ class ldap::server {
 		ensure  => running,
 		require => Package["slapd"]
 	}
+
+	include ldap::utils
 }
+

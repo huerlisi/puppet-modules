@@ -24,5 +24,6 @@ class desktop::ltsp {
         package {["iceweasel", "iceweasel-l10n-de"]: ensure => installed}
         package {"konversation": ensure => installed}
 	package {["icedove", "icedove-l10n-de"]: ensure => installed}
+	package {"luma": ensure => installed}
 }
 

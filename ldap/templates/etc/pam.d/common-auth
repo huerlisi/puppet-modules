@@ -7,7 +7,13 @@
 # (e.g., /etc/shadow, LDAP, Kerberos, etc.).  The default is to use the
 # traditional Unix authentication mechanisms.
 #
+
+# Accept any Unix authentication if not empty; empty ones only for secure ttys
 auth	sufficient	pam_unix.so nullok_secure
+
+# Accept LDAP authentication for users with uid >= 1000
 auth	requisite	pam_succeed_if.so uid >= 1000 quiet
 auth	sufficient	pam_ldap.so use_first_pass
+
+# Deny access otherwise
 auth	required	pam_deny.so

@@ -6,5 +6,9 @@
 # at the start and end of sessions of *any* kind (both interactive and
 # non-interactive).  The default is pam_unix.
 #
+
+# Use Unix session services
 session	required	pam_unix.so
+
+# Using ldap session is optional
 session	optional	pam_ldap.so

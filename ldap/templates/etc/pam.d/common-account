@@ -6,7 +6,9 @@
 # the central access policy for use on the system.  The default is to
 # only deny service to users whose accounts are expired in /etc/shadow.
 #
-account	required	pam_unix.so
-account	sufficient	pam_succeed_if.so uid < 1000 quiet
-account	[default=bad success=ok user_unknown=ignore]	pam_ldap.so
-account	required	pam_permit.so
+
+# Accept any LDAP account
+account	sufficient	pam_ldap.so
+
+# Accept Unix accounts, too
+account required	pam_unix.so

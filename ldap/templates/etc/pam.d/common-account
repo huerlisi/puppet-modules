@@ -12,3 +12,6 @@ account	sufficient	pam_ldap.so
 
 # Accept Unix accounts, too
 account required	pam_unix.so
+
+# Accept anything, mostly used to provide nobody user etc...
+account	required	pam_permit.so

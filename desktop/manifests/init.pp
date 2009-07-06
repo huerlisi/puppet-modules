@@ -24,7 +24,9 @@ class desktop::ltsp {
         package {["iceweasel", "iceweasel-l10n-de"]: ensure => installed}
         package {"konversation": ensure => installed}
 	package {["icedove", "icedove-l10n-de"]: ensure => installed}
-        package {"wine": ensure => installed}
+        package {["wine", "msttcorefonts"]: ensure => installed}
+	package {"flashplugin-nonfree": ensure => installed}
+	package {["freenx-server", "xkb-data", "expect", "tcl8.4", "dbus-x11", "libxcomp3", "libxcompext3", "libxcompshad3", "nxlibs", "nxagent", "nxproxy", "nxclient"]: ensure => installed}
 
 	package {"luma": ensure => installed}
 	include ldap::utils

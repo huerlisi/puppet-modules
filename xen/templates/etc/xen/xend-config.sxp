@@ -187,7 +187,7 @@
 # The interface for VNC servers to listen on. Defaults
 # to 127.0.0.1  To restore old 'listen everywhere' behaviour
 # set this to 0.0.0.0
-#(vnc-listen '127.0.0.1')
+(vnc-listen '0.0.0.0')
 
 # The default password for VNC console on HVM domain.
 # Empty string is no authentication.

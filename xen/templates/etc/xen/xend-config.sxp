@@ -95,6 +95,9 @@
 # Meaning and default as for xend-address above.
 #(xend-relocation-address '')
 
+(xend-relocation-server yes)
+(xend-relocation-address '')
+
 # The hosts allowed to talk to the relocation port.  If this is empty (the
 # default), then all connections are allowed (assuming that the connection
 # arrives on a port and interface on which we are listening; see

@@ -1,7 +1,7 @@
 # CUPS
 # ====
 class cups::server {
-	package {"cups": ensure => installed}
+	package {["cups", "hpijs", "hpijs-ppds", "foomatic-db", "foomatic-db-engine", "foomatic-db-hpijs", "openprinting-ppds"]: ensure => installed}
 
 	service {"cups":
 		ensure  => running,

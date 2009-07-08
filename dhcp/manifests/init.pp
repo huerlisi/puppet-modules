@@ -7,4 +7,12 @@ class dhcp::server {
                 ensure => running,
                 require => Package["dhcp3-server"]
         }
+
+	file {"/etc/dhcp3/dhcpd.conf":
+		ensure  => file,
+		content => template("dhcp/etc/dhcp3/dhcpd.conf"),
+		require => Package["dhcp3-server"],
+		notify  => Service["dhcp3-server"]
+	}
+
 }

@@ -14,5 +14,4 @@ class dhcp::server {
 		require => Package["dhcp3-server"],
 		notify  => Service["dhcp3-server"]
 	}
-
 }

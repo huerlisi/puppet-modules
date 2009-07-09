@@ -1,12 +1,13 @@
 # DHCP
 # ====
 class dhcp::server {
-        package { "dhcp3-server": ensure => installed }
+	package { "dhcp3-server": ensure => installed }
 
-        service { "dhcp3-server":
-                ensure => running,
-                require => Package["dhcp3-server"]
-        }
+	service { "dhcp3-server":
+		ensure  => running,
+		require => Package["dhcp3-server"],
+		pattern => '/usr/sbin/dhcpd3'
+	}
 
 	file {"/etc/dhcp3/dhcpd.conf":
 		ensure  => file,

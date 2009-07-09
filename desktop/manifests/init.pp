@@ -27,6 +27,7 @@ class desktop::ltsp {
         package {["wine", "msttcorefonts"]: ensure => installed}
 	package {"flashplugin-nonfree": ensure => installed}
 	package {["freenx-server", "xkb-data", "expect", "tcl8.4", "dbus-x11", "libxcomp3", "libxcompext3", "libxcompshad3", "nxlibs", "nxagent", "nxproxy", "nxclient"]: ensure => installed}
+	package {"sun-java6-plugin": ensure => installed}
 
 	package {"luma": ensure => installed}
 	include ldap::utils

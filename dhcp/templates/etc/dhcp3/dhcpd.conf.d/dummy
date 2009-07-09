@@ -1,0 +1,13 @@
+# Network declaration
+# ===================
+# No action, just defined
+
+<%
+require 'ipaddr'
+def calculate_network(address, netmask)
+  IPAddr.new("#{address}/#{netmask}").to_s
+end
+-%>
+
+subnet <%= calculate_network(host_address, network_netmask) %> netmask <%= network_netmask %> {
+}

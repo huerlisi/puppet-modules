@@ -15,4 +15,16 @@ class dhcp::server {
 		require => Package["dhcp3-server"],
 		notify  => Service["dhcp3-server"]
 	}
+
+	file {"/etc/dhcp3/dhcpd.conf.d":
+		ensure  => directory,
+		require => Package["dhcp3-server"],
+	}
+
+	file {"/etc/dhcp3/dhcpd.conf.d/dummy":
+		ensure  => file,
+		content => template("dhcp/etc/dhcp3/dhcpd.conf.d/dummy"),
+		require => File["/etc/dhcp3/dhcpd.conf.d"],
+		notify  => Service["dhcp3-server"]
+	}
 }

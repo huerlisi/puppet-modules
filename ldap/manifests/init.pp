@@ -37,7 +37,7 @@ class ldap::server {
 
 class ldap::pam {
 	include ldap::client
-	include ldap::nis
+	include ldap::nss
 
 	package {"libpam-ldap": ensure => installed}
 
@@ -59,7 +59,7 @@ class ldap::pam {
 	}
 }
 
-class ldap::nis {
+class ldap::nss {
 	package {"libnss-ldapd": ensure => installed}
 
 	file {"/etc/nss-ldapd.conf":

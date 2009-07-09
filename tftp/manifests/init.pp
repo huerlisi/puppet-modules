@@ -6,7 +6,7 @@ class tftp::server {
         service { "tftpd-hpa":
                 ensure => running,
                 require => Package["tftpd-hpa"],
-		pattern => 'in.tftpd'
+		pattern => '/usr/sbin/in.tftpd'
         }
 
 	file { "/etc/default/tftpd-hpa":

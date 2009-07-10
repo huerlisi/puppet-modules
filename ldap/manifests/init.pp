@@ -73,8 +73,14 @@ class ldap::pam {
 class ldap::nss {
 	package {"libnss-ldapd": ensure => installed}
 
+	service {"nslcd":
+		ensure  => running,
+		require => Package["libnss-ldapd"]
+	}
+
 	file {"/etc/nss-ldapd.conf":
-		content => template("ldap/etc/nss-ldapd.conf")
+		content => template("ldap/etc/nss-ldapd.conf"),
+		notify  => Service["nslcd"]
 	}
 
 	file {"/etc/nsswitch.conf":

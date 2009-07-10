@@ -30,6 +30,7 @@ class desktop::ltsp {
 	package {"sun-java6-plugin": ensure => installed}
 	package {"encfs": ensure => installed}
 	package {"luma": ensure => installed}
+	package {"speedcrunch": ensure => installed}
 	include ldap::utils
 }
 

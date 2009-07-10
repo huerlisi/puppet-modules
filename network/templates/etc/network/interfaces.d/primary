@@ -8,7 +8,7 @@ iface <%= iface_name %> inet static
 	netmask <%= iface_netmask %>
 
 	# DNS
-	dns-nameservers <%= iface_nameservers %>
+	dns-nameservers <%= iface_nameservers.join(' ') %>
 	dns-search <%= iface_search %>
 
 	<%= iface_options %>

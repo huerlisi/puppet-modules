@@ -6,6 +6,7 @@ class bind::server {
 	# TODO: state check doesn't work
 	service {"bind9":
 		ensure  => running,
+		pattern => 'named',
 		require => Package["bind9"]
 	}
 

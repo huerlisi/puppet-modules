@@ -9,3 +9,10 @@ class htdig::daemon {
 		require => Package["htdig"]
 	}
 }
+
+define htdig_instance($path) {
+	file {"/etc/htdig/htdig_$title.conf":
+		require => Package["htdig"],
+		ensure  => $path
+	}
+}

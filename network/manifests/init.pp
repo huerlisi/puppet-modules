@@ -41,7 +41,7 @@ class network::interfaces {
 			iface_netmask     => $network_netmask,
 			iface_nameservers => $network_nameservers,
 			iface_search      => $network_search,
-			iface_template    => "network/etc/network/interfaces.d/primary"
+			iface_template    => "zone_$zone/etc/network/interfaces.d/primary"
 		}
 	}
 

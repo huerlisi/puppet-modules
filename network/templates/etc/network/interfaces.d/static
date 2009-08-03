@@ -1,9 +1,7 @@
-# Static
-# ======
+# <%= title %>
+# ==========
 auto <%= iface_name %>
 iface <%= iface_name %> inet static
-	# Address
-	address <%= iface_address %>
-	netmask <%= iface_netmask %>
-
-	<%= iface_options %>
+        # Address
+        address <%= iface_address %>
+        netmask <%= iface_netmask %>

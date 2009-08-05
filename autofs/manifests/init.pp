@@ -1,6 +1,8 @@
 # AutoFS
 # ======
 class autofs::client {
+	$autofs_net = '/mnt/net'
+
         package {"autofs": ensure => installed }
         service {"autofs":
                 ensure  => running,

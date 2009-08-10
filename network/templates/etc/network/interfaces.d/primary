@@ -4,8 +4,10 @@ auto <%= iface_name %>
 iface <%= iface_name %> inet static
 	# Address
 	address <%= iface_address %>
-	gateway <%= iface_gateway %>
 	netmask <%= iface_netmask %>
+<% unless iface_gateway.empty? -%>
+	gateway <%= iface_gateway %>
+<% end -%>
 
 	# DNS
 	dns-nameservers <%= iface_nameservers.join(' ') %>

@@ -27,6 +27,14 @@ class squid::server {
 		notify  => Service["squid"],
 	}
 
+	file {"/etc/squid/conf.d/cache_dir.conf":
+		ensure  => present,
+		content => template("squid/etc/squid/conf.d/cache_dir.conf"),
+		require => File["/etc/squid/conf.d"],
+		require => Package["squid"],
+		notify  => Service["squid"],
+	}
+
 	file {"/etc/squid/squid.conf":
 		content => template("squid/etc/squid/squid.conf"),
 		notify  => Service["squid"],

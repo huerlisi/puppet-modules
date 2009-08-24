@@ -42,8 +42,8 @@ class xen::dom0 {
 	file { ["/var/lib/xen/", "/var/lib/xen/save"]: ensure => directory }
 }
 
-define xen::instance(position = '50') {
-	file { "/etc/xen/auto/$position-$title.cfg":
+define xen::instance(priority = '50') {
+	file { "/etc/xen/auto/$priority-$title.cfg":
 		ensure  => "/etc/xen/$title.cfg",
 		require => File["/etc/xen/auto"]
 	}

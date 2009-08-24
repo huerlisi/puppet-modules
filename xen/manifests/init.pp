@@ -33,6 +33,18 @@ class xen::dom0 {
                 notify  => Service["xend"]
         }
 
+	file { "/etc/xen/auto":
+		ensure  => directory,
+		require => Package["xen-utils"]
+	}
+
 	# Workaround for Debian Bug #519064 (http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519064)
 	file { ["/var/lib/xen/", "/var/lib/xen/save"]: ensure => directory }
+}
+
+define xen::instance() {
+	file { "/etc/xen/auto/$title.cfg":
+		ensure  => "/etc/xen/$title.cfg",
+		require => File["/etc/xen/auto"]
+	}
 }

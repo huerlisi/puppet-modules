@@ -2,6 +2,7 @@
 # =======
 class postfix::server {
         package {"postfix": ensure => installed }
+	package {"postfix-pcre": ensure => installed }
 
 	service {"postfix":
 		ensure  => running,
@@ -22,3 +23,9 @@ class postfix::server {
 	}
 }
 
+class postfix::proxy {
+	$postfix_mydestination = ''
+	$postfix_mynetworks    = $friend_networks
+
+	include server
+}

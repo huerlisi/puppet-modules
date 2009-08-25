@@ -30,9 +30,71 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 myhostname = mail
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
-mydestination = mail, localhost.localdomain, , localhost
+mydestination = <%= postfix_mydestination %>
 relayhost =
-mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+mynetworks = <%= postfix_mynetworks.join(' ') %>
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
+
+# Spam Prevention
+# ===============
+content_filter = smtp-amavis:[127.0.0.1]:10024
+
+# Be more scrict
+strict_rfc821_envelopes = yes
+disable_vrfy_command    = yes
+smtp_helo_required      = yes
+
+# SMTP Restrictions
+smtpd_client_restrictions =                                       
+smtpd_helo_restrictions =                                         
+smtpd_sender_restrictions =
+smtpd_recipient_restrictions =
+	check_recipient_access hash:/etc/postfix/recipient_access_REJECT
+
+	permit_mynetworks
+
+	check_helo_access      pcre:/etc/postfix/helo_sanity_access.pcre
+	check_recipient_access pcre:/etc/postfix/recipient_access.pcre
+	reject_unverified_recipient
+	check_recipient_access pcre:/etc/postfix/recipient_always_access.pcre
+
+	check_helo_access      hash:/etc/postfix/helo_access_OK
+	check_client_access    hash:/etc/postfix/client_access_OK
+	check_sender_access    hash:/etc/postfix/sender_access_OK
+
+	check_helo_access      hash:/etc/postfix/helo_access_DUNNO
+	check_client_access    hash:/etc/postfix/client_access_DUNNO
+	check_sender_access    hash:/etc/postfix/sender_access_DUNNO
+
+	check_helo_access      hash:/etc/postfix/helo_access_REJECT
+	check_client_access    hash:/etc/postfix/client_access_REJECT
+	check_sender_access    hash:/etc/postfix/sender_access_REJECT
+
+	check_client_access    cidr:/etc/postfix/client_is_spammer_access.cidr
+
+	reject_unknown_client_hostname
+	# TODO: _unknown_client_hostname is even stricter
+	reject_unknown_reverse_client_hostname
+
+	reject_invalid_helo_hostname
+	reject_non_fqdn_helo_hostname
+	reject_unknown_helo_hostname
+	reject_non_fqdn_sender
+	reject_unknown_sender_domain
+	check_client_access    pcre:/etc/postfix/client_access.pcre
+	reject_unauth_destination
+	check_client_access    hash:/etc/postfix/last_exit_before_sender_verify
+	reject_unverified_sender
+
+	# Host Blacklists
+	reject_rhsbl_sender dsn.rfc-ignorant.org
+	reject_rhsbl_client relays.ordb.org
+	# Network Blacklists
+	reject_rbl_client  dnsbl.njabl.org,
+	reject_rbl_client  sbl-xbl.spamhaus.org,
+	reject_rbl_client  relays.ordb.org,
+	reject_rbl_client  list.dsbl.org,
+	reject_rbl_client  cbl.abuseat.org,
+	reject_rbl_client  dnsbl.sorbs.net

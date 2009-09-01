@@ -14,3 +14,8 @@ iface <%= iface_name %> inet static
 	dns-nameservers <%= iface_nameservers.join(' ') %>
 	dns-search <%= iface_search %>
 <% end -%>
+
+<% unless iface_options.empty? -%>
+	# Options
+	<%= iface_options %>
+<% end -%>

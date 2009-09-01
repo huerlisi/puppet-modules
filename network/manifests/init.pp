@@ -23,6 +23,8 @@ class network::interfaces {
 			iface_gateway     => $network_gateway,
 			iface_nameservers => $network_nameservers,
 			iface_search      => $network_search,
+			iface_routes      => $network_routes,
+			iface_options     => $network_options,
 			iface_template    => $network_interface_template
 		}
 	} else {
@@ -41,7 +43,9 @@ class network::interfaces {
 			iface_netmask     => $network_netmask,
 			iface_nameservers => $network_nameservers,
 			iface_search      => $network_search,
-			iface_template    => "network/etc/network/interfaces.d/primary"
+			iface_routes      => $network_routes,
+			iface_options     => $network_options,
+			iface_template    => "network/etc/network/interfaces.d/static"
 		}
 	}
 

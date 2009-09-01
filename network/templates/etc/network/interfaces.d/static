@@ -9,3 +9,8 @@ iface <%= iface_name %> inet static
 	gateway <%= iface_gateway %>
 <% end -%>
 
+<% unless iface_nameservers.empty? -%>
+	# DNS
+	dns-nameservers <%= iface_nameservers.join(' ') %>
+	dns-search <%= iface_search %>
+<% end -%>

@@ -2,7 +2,7 @@
 # ==========
 
 # Workaround for Debian Bug #159884
-define network::interface($iface_name, $iface_address = "", $iface_netmask = "", $iface_gateway = "", $iface_nameservers = "", $iface_search = "", $iface_options = "", $iface_template = "zone_$zone/etc/network/interfaces") {
+define network::interface($iface_name, $iface_address = "", $iface_netmask = "", $iface_gateway = "", $iface_nameservers = "", $iface_search = "", $iface_routes = [], $iface_options = "", $iface_template = "zone_$zone/etc/network/interfaces") {
 	file {"/etc/network/interfaces.d/$title":
 		ensure  => present,
 		content => template("$iface_template"),

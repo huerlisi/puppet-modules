@@ -15,9 +15,9 @@ iface <%= iface_name %> inet static
 <% end -%>
 <% unless iface_routes.empty? -%>
 	# Routes
-	<% for route in iface_routes -%>
+<% for route in iface_routes -%>
 	up ip route add <%= route %>
-	<% end -%>
+<% end -%>
 <% end -%>
 <% unless iface_options.empty? -%>
 	# Options

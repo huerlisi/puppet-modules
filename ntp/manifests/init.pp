@@ -13,3 +13,7 @@ class ntp::client {
                 require => Package["ntp"]
         }
 }
+
+class ntp::server {
+	include ntp::client
+}

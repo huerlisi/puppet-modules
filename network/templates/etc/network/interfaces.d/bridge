@@ -1,8 +1,0 @@
-# Bridge
-# ======
-auto <%= iface_name %>
-iface <%= iface_name %> inet manual
-	address <%= iface_address %>
-	netmask <%= iface_netmask %>
-
-        bridge_ports none

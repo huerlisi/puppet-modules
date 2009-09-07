@@ -1,7 +1,12 @@
 # <%= title %>
-# ==========
+# <%= "=" * title.length %>
 auto <%= iface_name %>
 iface <%= iface_name %> inet static
+<% unless iface_bridge_ports.empty? -%>
+	# Bridge
+	bridge_ports <%= iface_bridge_ports.join(' ') %>
+
+<% end -%>
         # Address
         address <%= iface_address %>
         netmask <%= iface_netmask %>
@@ -9,17 +14,20 @@ iface <%= iface_name %> inet static
 	gateway <%= iface_gateway %>
 <% end -%>
 <% unless iface_nameservers.empty? -%>
+
 	# DNS
 	dns-nameservers <%= iface_nameservers.join(' ') %>
 	dns-search <%= iface_search %>
 <% end -%>
 <% unless iface_routes.empty? -%>
+
 	# Routes
 <% for route in iface_routes -%>
 	up ip route add <%= route %>
 <% end -%>
 <% end -%>
 <% unless iface_options.empty? -%>
+
 	# Options
 	<%= iface_options %>
 <% end -%>

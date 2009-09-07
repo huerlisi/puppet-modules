@@ -52,3 +52,16 @@ define xen::instance(priority = '50') {
 		require => File["/etc/xen/auto"]
 	}
 }
+
+define xen::resource::drbd(device, port) {
+	drbd::resource { $title:
+		device        => $device,
+		hostname      => $hostname,
+		ip            => $xen_ip,
+		port          => $port,
+		disk          => "/dev/$hostname/$title",
+		peer_hostname => $xen_peer_hostname,
+		peer_ip       => $xen_peer_ip,
+		peer_disk     => "/dev/$xen_peer_hostname/$title"
+	}
+}

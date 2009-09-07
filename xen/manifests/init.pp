@@ -16,7 +16,11 @@ class xen::domU {
 
 class xen::dom0 {
         include xen-tools
-        package { ["xen-utils", "xen-hypervisor-i386", "linux-image-xen-686"]: ensure => installed }
+        package { "xen-utils": ensure => installed }
+	case $architecture {
+		"i686":  { package { ["xen-hypervisor-i386", "linux-image-xen-686"]: ensure => installed } }
+		"amd64": { package { ["xen-hypervisor", "linux-image-xen-amd64"]: ensure => installed } }
+	}
 
         service {"xend":
                 ensure  => running,

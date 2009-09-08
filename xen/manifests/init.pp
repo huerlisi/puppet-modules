@@ -53,6 +53,20 @@ define xen::instance(priority = '50') {
 	}
 }
 
+define xen::instance::drbd(priority = '50', disk_size = '4G', swap_size = '128M', drbd_disk_port, drbd_disk_device, drbd_swap_port, drbd_swap_device) {
+	lvm::device {"$title-disk": size => $disk_size}
+	xen::resource::drbd {"$title-disk":
+		device => $drbd_disk_device,
+		port   => $drbd_disk_port
+	}
+
+	lvm::device {"$title-swap": size => $swap_size}
+	xen::resource::drbd {"$title-swap":
+		device => $drbd_swap_device,
+		port   => $drbd_swap_port
+	}
+}
+
 define xen::resource::drbd(device, port) {
 	drbd::resource { $title:
 		device        => $device,

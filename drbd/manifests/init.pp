@@ -4,6 +4,8 @@ class drbd::daemon {
 	package { "drbd8-utils": ensure => installed }
 	package { "drbd8-modules-$kernelrelease": ensure => installed }
 
+	service { "drbd": ensure => running }
+
 	file {"/etc/drbd.d/00-common":
 		ensure  => present,
 		content => template("drbd/etc/drbd.d/common"),
@@ -17,9 +19,9 @@ class drbd::daemon {
 		path        => ["/usr/local/sbin", "/usr/local/bin", "/usr/sbin", "/usr/bin", "/sbin", "/bin"],
                 command     => "cat $(run-parts --list /etc/drbd.d) > /etc/drbd.conf",
 		refreshonly => true,
-		require     => File["/etc/drbd.d"]
+		require     => [ File["/etc/drbd.d"], Package["drbd8-utils"] ],
+		notify      => Service["drbd"]
 	}
-
 }
 
 define drbd::resource(device, hostname, ip, port, disk, peer_device = '', peer_hostname, peer_ip, peer_port = '', peer_disk = '') {

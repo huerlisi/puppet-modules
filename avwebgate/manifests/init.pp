@@ -3,6 +3,10 @@
 class avwebgate::server {
 	# TODO: No package available
 
+	case $architecture {
+	"amd64": { package {"ia32-libs": ensure => installed} }
+	}
+
 	service {"avwebgate":
 		ensure => running
 	}

@@ -27,6 +27,12 @@ common {
   #**********                                                      
   protocol C;
 
+  startup {
+    # Timeouts during boot
+    wfc-timeout 60;
+    degr-wfc-timeout 30;
+  }
+
   syncer { rate 100M; }
 
   disk    { on-io-error detach; }

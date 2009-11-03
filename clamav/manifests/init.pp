@@ -7,7 +7,8 @@ class clamav::daemon {
 
 	service {"clamav-daemon":
 		ensure  => running,
-		require => Package["clamav-daemon"]
+		require => Package["clamav-daemon"],
+		pattern => 'clamd'
 	}
 }
 
@@ -16,7 +17,8 @@ class clamav::updater {
 
 	service {"clamav-freshclam":
 		ensure  => running,
-		require => Package["clamav-freshclam"]
+		require => Package["clamav-freshclam"],
+		pattern => 'freshclam'
 	}
 }
 

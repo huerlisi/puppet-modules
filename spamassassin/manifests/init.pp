@@ -4,7 +4,7 @@ class spamassassin::daemon {
         package {"spamassassin": ensure => installed }
 
 	service {"spamassassin":
-		ensure  => running,
+		ensure  => stopped,
 		require => Package["spamassassin"]
 	}
 

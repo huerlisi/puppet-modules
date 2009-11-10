@@ -31,7 +31,12 @@ class amavis::spam {
 # Anti-Virus
 # ==========
 class amavis::virus {
-	# TODO: add group clamav to amavis
+	user {"clamav":
+		groups  => 'amavis',
+		require => [Package["amavisd-new"], Package["clamav-daemon"]],
+		notify  => Service["clamav-daemon"]
+	}
+
 	file {"/etc/amavis/conf.d/50-enable-virus-checks":
 		ensure  => present,
 		content => template("amavis/etc/amavis/conf.d/50-enable-virus-checks"),

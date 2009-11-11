@@ -16,6 +16,10 @@ class php::gd {
 	package {"php5-gd": ensure => installed}
 }
 
+class php::mysql {
+	package {"php5-mysql": ensure => installed}
+}
+
 class php::imagick {
 	package {"php5-imagick": ensure => installed}
 }

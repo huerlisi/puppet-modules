@@ -10,7 +10,7 @@ class openvpn::server {
 }
 
 class openvpn::bridge inherits openvpn::server {
-	package {"bridge-utils": ensure => installed}
+	include network::bridge
 
 	file {"/etc/openvpn/$title.conf":
 		ensure  => present,

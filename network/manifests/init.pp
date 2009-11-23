@@ -12,9 +12,19 @@ class network::interface::common {
 	}
 }
 
+class network::bridge {
+	package {"bridge-utils": ensure => installed}
+}
+
 # Workaround for Debian Bug #159884
 define network::interface($iface_name, $iface_address = "", $iface_netmask = "", $iface_gateway = "", $iface_nameservers = "", $iface_search = "", $iface_routes = [], $iface_bridge_ports = [], $iface_options = "", $iface_template = "zone_$zone/etc/network/interfaces") {
 	include network::interface::common
+
+#	TODO: We only would like to install if there's some bridge_ports
+#	case $iface_bridge_ports {
+#		[]: {}
+#		default: { include network::bridge }
+#	}
 
 	file {"/etc/network/interfaces.d/$title":
 		ensure  => present,

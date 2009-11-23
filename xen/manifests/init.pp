@@ -28,7 +28,7 @@ class xen::dom0 {
         }
 
 	case $xen_network_script {
-		'network-bridge': { package {"bridge-utils": ensure => installed} }
+		'network-bridge': { include network::bridge }
 	}
 
         file { "/etc/xen/xend-config.sxp":

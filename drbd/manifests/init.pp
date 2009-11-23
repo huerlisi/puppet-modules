@@ -20,7 +20,7 @@ class drbd::daemon {
                 command     => "cat $(run-parts --list /etc/drbd.d) > /etc/drbd.conf",
 		refreshonly => true,
 		require     => [ File["/etc/drbd.d"], Package["drbd8-utils"] ],
-		notify      => Service["drbd"]
+#		notify      => Service["drbd"]
 	}
 }
 
@@ -32,5 +32,12 @@ define drbd::resource(device, hostname, ip, port, disk, peer_device = '', peer_h
 		content => template("drbd/etc/drbd.d/resource.conf"),
 		require => File["/etc/drbd.d"],
 		notify  => Exec["Generating /etc/drbd.conf"]
+	}
+
+	exec { "Initializing DRBD resource $title":
+		path        => ["/usr/local/sbin", "/usr/local/bin", "/usr/sbin", "/usr/bin", "/sbin", "/bin"],
+                command     => "drbdadm create-md $title; drbdadm up $title",
+		onlyif      => "drbdadm state $title | grep 'Unconfigured'",
+		require     => [ File["/etc/drbd.d"], Package["drbd8-utils"] ],
 	}
 }

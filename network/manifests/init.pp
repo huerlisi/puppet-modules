@@ -1,8 +1,21 @@
 # Networking
 # ==========
+class network::interface::common {
+	# Workaround for Debian Bug #159884
+	file { "/etc/network/interfaces.d/": ensure => directory }
+
+	exec { "Generating /etc/network/interfaces":
+		path        => ["/usr/local/sbin", "/usr/local/bin", "/usr/sbin", "/usr/bin", "/sbin", "/bin"],
+                command     => "cat $(run-parts --list /etc/network/interfaces.d) > /etc/network/interfaces",
+		refreshonly => true,
+		require     => File["/etc/network/interfaces.d/"]
+	}
+}
 
 # Workaround for Debian Bug #159884
 define network::interface($iface_name, $iface_address = "", $iface_netmask = "", $iface_gateway = "", $iface_nameservers = "", $iface_search = "", $iface_routes = [], $iface_bridge_ports = [], $iface_options = "", $iface_template = "zone_$zone/etc/network/interfaces") {
+	include network::interface::common
+
 	file {"/etc/network/interfaces.d/$title":
 		ensure  => present,
 		content => template("$iface_template"),
@@ -12,18 +25,9 @@ define network::interface($iface_name, $iface_address = "", $iface_netmask = "",
 }
 
 class network::interfaces {
-	# Workaround for Debian Bug #159884
-	file { "/etc/network/interfaces.d/": ensure => directory }
-
 	network::interface {"10-lo":
 		iface_name        => "lo",
 		iface_template    => "network/etc/network/interfaces.d/lo"
-	}
-	exec { "Generating /etc/network/interfaces":
-		path        => ["/usr/local/sbin", "/usr/local/bin", "/usr/sbin", "/usr/bin", "/sbin", "/bin"],
-                command     => "cat $(run-parts --list /etc/network/interfaces.d) > /etc/network/interfaces",
-		refreshonly => true,
-		require     => File["/etc/network/interfaces.d/"]
 	}
 }
 

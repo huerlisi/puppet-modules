@@ -25,7 +25,7 @@ class xen::dom0 {
         service {"xend":
                 ensure  => running,
                 require => Package["xen-utils"]
-        }
+	}
 
 	case $xen_network_script {
 		'network-bridge': { include network::bridge }
@@ -46,6 +46,8 @@ class xen::dom0 {
 	file { ["/var/lib/xen/", "/var/lib/xen/save"]: ensure => directory }
 }
 
+# Configuration
+# =============
 define xen::instance(priority = '50') {
 	file { "/etc/xen/auto/$priority-$title.cfg":
 		ensure  => "/etc/xen/$title.cfg",
@@ -53,6 +55,16 @@ define xen::instance(priority = '50') {
 	}
 }
 
+define xen::instance::config(xen_memory = '128', xen_disks = [], vifs = []) {
+	file { "/etc/xen/$title.cfg":
+		ensure  => present,
+		content => template("xen/etc/xen/xend.cfg"),
+		require => Package["xen-utils"]
+	}
+}
+
+# DRBD
+# ====
 define xen::instance::drbd(priority = '50', disk_size = '4G', swap_size = '128M', drbd_disk_port, drbd_disk_device, drbd_swap_port, drbd_swap_device) {
 	lvm::device {"$title-disk": size => $disk_size}
 	xen::resource::drbd {"$title-disk":

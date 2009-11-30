@@ -1,5 +1,13 @@
 # Munin
 # =====
+class munin::server {
+        package {"munin": ensure => installed }
+        service {"munin":
+                ensure  => running,
+                require => Package["munin"]
+        }
+}
+
 class munin::client {
         package {"munin-node": ensure => installed }
         service {"munin-node":

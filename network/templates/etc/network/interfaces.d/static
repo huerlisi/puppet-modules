@@ -7,9 +7,9 @@ iface <%= iface_name %> inet static
 	bridge_ports <%= iface_bridge_ports.join(' ') %>
 
 <% end -%>
-        # Address
-        address <%= iface_address %>
-        netmask <%= iface_netmask %>
+	# Address
+	address <%= iface_address %>
+	netmask <%= iface_netmask %>
 <% unless iface_gateway.empty? -%>
 	gateway <%= iface_gateway %>
 <% end -%>

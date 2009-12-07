@@ -95,11 +95,9 @@ smtpd_recipient_restrictions =
 
 	# Host Blacklists
 	reject_rhsbl_sender dsn.rfc-ignorant.org
-	reject_rhsbl_client relays.ordb.org
 	# Network Blacklists
 	reject_rbl_client  dnsbl.njabl.org,
 	reject_rbl_client  sbl-xbl.spamhaus.org,
-	reject_rbl_client  relays.ordb.org,
 	reject_rbl_client  list.dsbl.org,
 	reject_rbl_client  cbl.abuseat.org,
 	reject_rbl_client  dnsbl.sorbs.net

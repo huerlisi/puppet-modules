@@ -34,7 +34,7 @@ define network::interface($iface_name, $iface_address = "", $iface_netmask = "",
 	}
 }
 
-class network::interfaces {
+class network::interface::lo {
 	network::interface {"10-lo":
 		iface_name        => "lo",
 		iface_template    => "network/etc/network/interfaces.d/lo"

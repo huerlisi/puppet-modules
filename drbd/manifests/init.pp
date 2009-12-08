@@ -24,7 +24,7 @@ class drbd::daemon {
 	}
 }
 
-define drbd::resource(device, hostname, ip, port, disk, peer_device = '', peer_hostname, peer_ip, peer_port = '', peer_disk = '') {
+define drbd::resource($device, $hostname, $ip, $port, $disk, $peer_device = '', $peer_hostname, $peer_ip, $peer_port = '', $peer_disk = '') {
 	include drbd::daemon
 
 	file {"/etc/drbd.d/$title":

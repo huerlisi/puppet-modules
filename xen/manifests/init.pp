@@ -48,14 +48,14 @@ class xen::dom0 {
 
 # Configuration
 # =============
-define xen::instance(priority = '50') {
+define xen::instance($priority = '50') {
 	file { "/etc/xen/auto/$priority-$title.cfg":
 		ensure  => "/etc/xen/$title.cfg",
 		require => File["/etc/xen/auto"]
 	}
 }
 
-define xen::instance::config(xen_memory = '128', xen_disks = [], vifs = []) {
+define xen::instance::config($xen_memory = '128', $xen_disks = [], $vifs = []) {
 	file { "/etc/xen/$title.cfg":
 		ensure  => present,
 		content => template("xen/etc/xen/xend.cfg"),
@@ -65,7 +65,7 @@ define xen::instance::config(xen_memory = '128', xen_disks = [], vifs = []) {
 
 # DRBD
 # ====
-define xen::instance::drbd(priority = '50', disk_size = '4G', swap_size = '128M', drbd_disk_port, drbd_disk_device, drbd_swap_port, drbd_swap_device) {
+define xen::instance::drbd($priority = '50', $disk_size = '4G', $swap_size = '128M', $drbd_disk_port, $drbd_disk_device, $drbd_swap_port, $drbd_swap_device) {
 	lvm::device {"$title-disk": size => $disk_size}
 	xen::resource::drbd {"$title-disk":
 		device => $drbd_disk_device,
@@ -79,7 +79,7 @@ define xen::instance::drbd(priority = '50', disk_size = '4G', swap_size = '128M'
 	}
 }
 
-define xen::resource::drbd(device, port) {
+define xen::resource::drbd($device, $port) {
 	drbd::resource { $title:
 		device        => $device,
 		hostname      => $hostname,

@@ -17,6 +17,14 @@ class apt::client {
 	}
 }
 
+class apt::update {
+	exec { "apt-get update":
+		path        => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+		refreshonly => true,
+		timeout     => "-1"
+	}
+}
+
 class apt::unattended-upgrades {
 	package {"unattended-upgrades": ensure => installed}
 }

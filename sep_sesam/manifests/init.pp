@@ -5,10 +5,12 @@ class sep_sesam::client {
 	# TODO: apt-get update
 	file {"/etc/apt/sources.list.d/lenny-sep-sesam.list":
 		ensure  => present,
-		content => template("sep_sesam/etc/apt/sources.list.d/lenny-sep-sesam.list")
+		content => template("sep_sesam/etc/apt/sources.list.d/lenny-sep-sesam.list"),
+		notify  => Exec["apt-get update"]
 	}
 
 	# TODO: unauthenticated package error...
+	include apt::update
 	package {"sesam-cli":
 		ensure  => installed,
 		require => File["/etc/apt/sources.list.d/lenny-sep-sesam.list"]

@@ -68,20 +68,24 @@ define xen::instance::config($priority = '50', $xen_memory = '128', $xen_disks =
 # DRBD
 # ====
 define xen::instance::drbd($priority = '50', $disk_size = '4G', $swap_size = '128M', $drbd_disk_port, $drbd_disk_device, $drbd_swap_port, $drbd_swap_device) {
-	lvm::device {"$title-disk": size => $disk_size}
 	xen::resource::drbd {"$title-disk":
 		device => $drbd_disk_device,
-		port   => $drbd_disk_port
+		port   => $drbd_disk_port,
+		size   => $disk_size
 	}
 
-	lvm::device {"$title-swap": size => $swap_size}
 	xen::resource::drbd {"$title-swap":
 		device => $drbd_swap_device,
-		port   => $drbd_swap_port
+		port   => $drbd_swap_port,
+		size   => $swap_size
 	}
 }
 
-define xen::resource::drbd($device, $port) {
+define xen::resource::drbd($device, $port, $size) {
+	lvm::device {"$title":
+		volume => $title,
+		size  => $size
+	}
 	drbd::resource { $title:
 		device        => $device,
 		hostname      => $hostname,
@@ -91,5 +95,34 @@ define xen::resource::drbd($device, $port) {
 		peer_hostname => $xen_peer_hostname,
 		peer_ip       => $xen_peer_ip,
 		peer_disk     => "/dev/$xen_peer_hostname/$title"
+	}
+}
+
+# Raid
+# ====
+define xen::instance::raid($priority = '50', $disk_size = '4G', $swap_size = '128M', $lvm_group1, $lvm_group2) {
+	xen::resource::raid {"$title-disk":
+		group1 => $lvm_group1,
+		group2 => $lvm_group2,
+		size   => $disk_size
+	}
+	xen::resource::raid {"$title-swap":
+		group1 => $lvm_group1,
+		group2 => $lvm_group2,
+		size   => $swap_size
+	}
+}
+
+define xen::resource::raid($group1, $group2, $size) {
+	lvm::device {"$group1-$title":
+		volume => $title,
+		group  => $group1,
+		size   => $size
+	}
+
+	lvm::device {"$group2-$title":
+		volume => $title,
+		group  => $group2,
+		size   => $size
 	}
 }

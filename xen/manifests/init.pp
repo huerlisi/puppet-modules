@@ -100,20 +100,12 @@ define xen::resource::drbd($device, $port, $size) {
 
 # Raid
 # ====
-define xen::instance::raid($priority = '50', $disk_size = '4G', $swap_size = '128M', $lvm_group1, $lvm_group2) {
-	xen::resource::raid {"$title-disk":
-		group1 => $lvm_group1,
-		group2 => $lvm_group2,
-		size   => $disk_size
-	}
-	xen::resource::raid {"$title-swap":
-		group1 => $lvm_group1,
-		group2 => $lvm_group2,
-		size   => $swap_size
-	}
+define xen::instance::raid($priority = '50', $disk_size = '4G', $swap_size = '128M') {
+	xen::resource::raid {"$title-disk": size => $disk_size }
+	xen::resource::raid {"$title-swap": size => $swap_size }
 }
 
-define xen::resource::raid($group1, $group2, $size) {
+define xen::resource::raid($group1 = "$xen_lvm_group1", $group2 = "$xen_lvm_group2", $size) {
 	lvm::device {"$group1-$title":
 		volume => $title,
 		group  => $group1,

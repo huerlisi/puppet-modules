@@ -63,6 +63,12 @@ define xen::instance::config($priority = '50', $xen_vcpus = 1, $xen_memory = '12
 	}
 
 	xen::instance { "$title": priority => $priority }
+
+	case $xen_storage {
+		'raid': {
+			xen::instance::raid{ "$title": }
+		}
+	}
 }
 
 # DRBD
@@ -84,7 +90,7 @@ define xen::instance::drbd($priority = '50', $disk_size = '4G', $swap_size = '12
 define xen::resource::drbd($device, $port, $size) {
 	lvm::device {"$title":
 		volume => $title,
-		size  => $size
+		size   => $size
 	}
 	drbd::resource { $title:
 		device        => $device,

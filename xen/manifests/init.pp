@@ -55,7 +55,7 @@ define xen::instance($priority = '50') {
 	}
 }
 
-define xen::instance::config($priority = '50', $xen_memory = '128', $xen_disks = [], $vifs = []) {
+define xen::instance::config($priority = '50', $xen_vcpus = 1, $xen_memory = '128', $xen_disks = [], $vifs = []) {
 	file { "/etc/xen/$title.cfg":
 		ensure  => present,
 		content => template("xen/etc/xen/xend.cfg"),

@@ -30,3 +30,7 @@ root    ALL=(ALL) ALL
 # %sudo ALL=NOPASSWD: ALL
 
 <%= sudoers_content %>
+
+# X2Go
+# ====
+%x2gousers      ALL=(ALL) NOPASSWD:  /usr/bin/x2gopgwrapper

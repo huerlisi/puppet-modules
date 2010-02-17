@@ -46,6 +46,20 @@ class ldap::server {
 	include ldap::utils
 }
 
+class ldap::phpldapadmin {
+	include apache::server
+
+	package { "phpldapadmin":
+		ensure => installed,
+		notify  => Service["apache2"]
+	}
+
+	package { "php5-mhash":
+		ensure => installed,
+		notify  => Service["apache2"]
+	}
+}
+
 class ldap::pam {
 	include ldap::client
 	include ldap::nss

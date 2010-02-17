@@ -66,7 +66,7 @@ class ldap::pam {
 
 	package {"libpam-ldap": ensure => installed}
 
-	file {"/etc/pam_ldap.conf":
+	file {["/etc/pam_ldap.conf", "/etc/ldap.conf"]:
 		content => template("ldap/etc/pam_ldap.conf")
 	}
 

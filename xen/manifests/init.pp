@@ -3,9 +3,14 @@
 class xen::domU {
 	service {"procps": ensure => running }
 
-	file { "/etc/sysctl.d/50-xen-clocksource.conf":
-		content => template('xen/etc/sysctl.d/50-xen-clocksource.conf'),
-		notify  => Service['procps']
+	case $lsbdistcodename {
+		'hardy': {}
+		default: {
+			file { "/etc/sysctl.d/50-xen-clocksource.conf":
+				content => template('xen/etc/sysctl.d/50-xen-clocksource.conf'),
+				notify  => Service['procps']
+			}
+		}
 	}
 }
 

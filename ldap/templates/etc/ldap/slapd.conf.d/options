@@ -9,8 +9,10 @@ include         /etc/ldap/schema/nis.schema
 include         /etc/ldap/schema/inetorgperson.schema
 
 # Additional schema
+<% if has_variable?('ldap_schema') -%>
 <% for ldap_schema in ldap_schemas -%>
 include         /etc/ldap/schema/<%= ldap_schema %>.schema
+<% end -%>
 <% end -%>
 
 # List of arguments that were passed to the server

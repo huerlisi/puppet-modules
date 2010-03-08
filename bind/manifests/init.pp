@@ -10,7 +10,8 @@ class bind::server {
 	}
 
 	file {"/etc/bind/zones.d":
-		ensure => directory
+		ensure  => directory,
+		require => Package["bind9"]
 	}
 }
 

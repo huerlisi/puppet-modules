@@ -6,5 +6,9 @@ class mail::client {
 		default: { package {"bsd-mailx": ensure => installed} }
 	}
 
+	include mail::mailname
+}
+
+class mail::mailname {
 	file {"/etc/mailname": content => $fqdn}
 }

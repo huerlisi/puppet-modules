@@ -1,7 +1,12 @@
 # Postfix
 # =======
 class postfix::server {
-        package {"postfix": ensure => installed }
+	include mail::mailname
+
+        package {"postfix":
+		ensure => installed,
+		subscribe => File["/etc/mailname"]
+	}
 	package {"postfix-pcre": ensure => installed }
 
 	service {"postfix":

@@ -40,8 +40,7 @@ class ldap::server {
 	file {"/etc/ldap/slapd.conf.d/options":
 		ensure  => file,
 		content => template("ldap/etc/ldap/slapd.conf.d/options"),
-		require => File["/etc/ldap/slapd.conf.d"],
-		require => Package["slapd"],
+		require => [ Package["slapd"], File["/etc/ldap/slapd.conf.d"] ],
 		notify  => Service["slapd"]
 	}
 

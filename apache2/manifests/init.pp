@@ -1,6 +1,6 @@
 # Apache
 # ======
-class apache::server {
+class apache2::server {
         package {"apache2": ensure => installed }
         service {"apache2":
                 ensure  => running,

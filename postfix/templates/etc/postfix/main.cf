@@ -30,7 +30,7 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 myhostname = <%= mail_server_fqdn %>
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
-mydestination = <%= postfix_mydestination %>
+mydestination = <%= postfix_mydestinations.join(', ') %>
 relayhost =
 mynetworks = <%= postfix_mynetworks.join(' ') %>
 mailbox_size_limit = 0

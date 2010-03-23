@@ -1,6 +1,6 @@
 # Xen
 # ===
-class xen::domU {
+class xen::guest {
 	service {"procps": alias => sysctl}
 
 	case $lsbdistcodename {
@@ -14,7 +14,7 @@ class xen::domU {
 	}
 }
 
-class xen::dom0 {
+class xen::host {
         include xen-tools
         package { "xen-utils": ensure => installed }
 	case $architecture {

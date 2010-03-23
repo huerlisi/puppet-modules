@@ -40,7 +40,6 @@ inet_interfaces = all
 # Relay Domains
 # =============
 relay_domains  = <%= postfix_relaydomains.join(', ') %>
-transport_maps = hash:/etc/postfix/transport
 
 # Spam Prevention
 # ===============

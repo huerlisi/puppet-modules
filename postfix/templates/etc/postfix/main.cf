@@ -41,9 +41,11 @@ inet_interfaces = all
 # =============
 relay_domains  = <%= postfix_relaydomains.join(', ') %>
 
+<% if has_variable?('amavis_port') -%>
 # Spam Prevention
 # ===============
 content_filter = smtp-amavis:[127.0.0.1]:10024
+<% end -%>
 
 # Be more scrict
 strict_rfc821_envelopes = yes

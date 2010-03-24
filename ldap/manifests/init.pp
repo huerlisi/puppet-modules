@@ -96,20 +96,24 @@ class ldap::pam {
 	}
 }
 
-class ldap::nss {
+class ldap::nslcd {
 	case $lsbdistcodename {
 		'karmic': {
 			package {"nslcd": ensure => installed}
 		}
 	}
 
-	package {"libnss-ldapd": ensure => installed}
-
 	service {"nslcd":
 		ensure  => running,
 		require => Package["libnss-ldapd"]
 	}
 
+}
+
+class ldap::nss {
+	include ldap::nslcd
+
+	package {"libnss-ldapd": ensure => installed}
 	file {"/etc/nss-ldapd.conf":
 		content => template("ldap/etc/nss-ldapd.conf"),
 		notify  => Service["nslcd"]

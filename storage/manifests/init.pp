@@ -17,5 +17,5 @@ define storage::srv() {
 class storage::homes {
 	srv { "home": }
 
-	nfs::export { "/srv/$network/home": client => $network }
+	nfs::export { "/srv/$network/home": client => "*.$network" }
 }

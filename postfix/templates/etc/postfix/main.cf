@@ -39,7 +39,7 @@ recipient_delimiter = +
 inet_interfaces = all
 
 <% if has_variable?('postfix_delivery') and postfix_delivery == 'maildir' -%>
-home_mailbox = Maildir/
+mail_spool_directory = /srv/<%= mail_domain %>/maildir/
 <% end -%>
 
 # Relay Domains

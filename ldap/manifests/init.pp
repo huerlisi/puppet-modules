@@ -100,8 +100,9 @@ class ldap::nslcd {
 	case $lsbdistcodename {
 		'karmic', 'lucid': {
 			package {"nslcd": ensure => installed}
-                        file {"/etc/nslcd.conf":
-                                content => template("ldap/etc/nss-ldapd.conf")
+                        file {["/etc/nslcd.conf", "/etc/nss-ldapd.conf"]:
+                                content => template("ldap/etc/nss-ldapd.conf"),
+                                notify  => Service["nslcd"]
                         }
 		}
 		default: {

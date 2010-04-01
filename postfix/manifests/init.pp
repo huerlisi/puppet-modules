@@ -28,6 +28,16 @@ class postfix::server {
 	}
 }
 
+# Plugins
+# =======
+class postfix::ldap {
+	include server
+	
+	package {"postfix-ldap": ensure => installed}
+}
+
+# Configurations
+# ==============
 class postfix::proxy {
 	$postfix_mydestination = ''
 	$postfix_mynetworks    = $friend_networks

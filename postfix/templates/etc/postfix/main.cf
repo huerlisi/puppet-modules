@@ -60,9 +60,9 @@ virtual_gid_maps        = hash:/etc/postfix/vgids
 # =============
 relay_domains  = <%= postfix_relaydomains.join(', ') %>
 
-<% if has_variable?('amavis_port') -%>
-# Spam Prevention
-# ===============
+<% if has_variable?('mail_filter') and mail_filter = 'amavis' -%>
+# Content Filtering
+# =================
 content_filter = smtp-amavis:[127.0.0.1]:10024
 <% end -%>
 

@@ -20,6 +20,9 @@ class amavis::daemon {
 # Anti-Spam
 # =========
 class amavis::spam {
+	include daemon
+
+	include spamassassin::daemon
 	file {"/etc/amavis/conf.d/50-enable-spam-checks":
 		ensure  => present,
 		content => template("amavis/etc/amavis/conf.d/50-enable-spam-checks"),
@@ -31,6 +34,9 @@ class amavis::spam {
 # Anti-Virus
 # ==========
 class amavis::virus {
+	include daemon
+
+	include clamav::daemon
 	user {"clamav":
 		groups  => 'amavis',
 		require => [Package["amavisd-new"], Package["clamav-daemon"]],

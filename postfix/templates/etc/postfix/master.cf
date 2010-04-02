@@ -87,13 +87,13 @@ dovecot   unix  -       n       n       -       -       pipe
   flags=DRhu user=<%= mailbox_user %>:<%= mailbox_group %> argv=/usr/lib/dovecot/deliver -f ${sender} -d ${recipient}
 <% end -%>
 
+<% if has_variable?('mail_filter') and mail_filter = 'amavis' -%>
 # Amavis
 # ======
-# Amavis according Debian HOWTO
-
 smtp-amavis unix    -       -       n       -       2     smtp
      -o smtp_data_done_timeout=1200
      -o smtp_send_xforward_command=yes
+     -o disable_dns_lookups=yes
      -o smtp_tls_note_starttls_offer=no
 
 127.0.0.1:10025 inet n    -       n       -       -     smtpd
@@ -117,3 +117,4 @@ smtp-amavis unix    -       -       n       -       2     smtp
      -o smtpd_milters=
      -o local_recipient_maps=
      -o relay_recipient_maps=
+<% end -%>

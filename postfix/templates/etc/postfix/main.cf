@@ -38,9 +38,23 @@ mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
 
-<% if has_variable?('postfix_delivery') and postfix_delivery == 'maildir' -%>
 mail_spool_directory = /srv/<%= mail_domain %>/maildir/
+
+<% if has_variable?('mailbox_delivery') and mailbox_delivery == 'dovecot' -%>
+# Dovecot
+# =======
+dovecot_destination_recipient_limit = 1
+virtual_transport = dovecot
 <% end -%>
+
+# Virtual Domains
+# ===============
+virtual_mailbox_domains = <%= postfix_virtual_domains.join(', ') %>
+virtual_mailbox_base    = /srv/<%= mail_domain %>/maildir
+virtual_mailbox_maps    = hash:/etc/postfix/vmailbox
+virtual_alias_maps      = hash:/etc/postfix/valiases
+virtual_uid_maps        = hash:/etc/postfix/vuids
+virtual_gid_maps        = hash:/etc/postfix/vgids
 
 # Relay Domains
 # =============

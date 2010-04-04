@@ -5,10 +5,10 @@
 #
 # Depends on:
 #   - apache2
-class apache2::passenger {
+class passenger::apache2 {
 	include apache2::server
 
-	package {"libapache2-passenger":
+	package {"libapache2-mod-passenger":
 		ensure => installed,
 		notify => Service["apache2"]
 	}

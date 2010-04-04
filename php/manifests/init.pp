@@ -4,7 +4,7 @@ class php::base {
 	package { "php5": ensure => installed }
 }
 
-class php::apache2-mod {
+class php::apache2 {
 	package { "libapache2-mod-php5": ensure => installed }
 }
 

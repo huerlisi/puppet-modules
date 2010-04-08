@@ -59,6 +59,9 @@ virtual_gid_maps        = hash:/etc/postfix/vgids
 # Relay Domains
 # =============
 relay_domains  = <%= postfix_relaydomains.join(', ') %>
+<% if postfix_transport_map -%>
+transport_maps = hash:/etc/postfix/transport
+<% end -%>
 
 <% if has_variable?('mail_filter') and mail_filter = 'amavis' -%>
 # Content Filtering

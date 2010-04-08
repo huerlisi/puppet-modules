@@ -26,6 +26,20 @@ class postfix::server {
 		require => Package["postfix"],
 		notify  => Service["postfix"]
 	}
+
+	if $postfix_transport_map {
+		exec {"postfix transport mapping":
+			command     => "/usr/sbin/postmap /etc/postfix/transport",
+			require     => Package["postfix"],
+			refreshonly => true
+		}
+                file {"/etc/postfix/transport":
+                        ensure  => present,
+                        content => template("postfix/etc/postfix/transport"),
+                        require => Package["postfix"],
+                        notify  => Exec["postfix transport mapping"]
+                }
+	}
 }
 
 # Plugins

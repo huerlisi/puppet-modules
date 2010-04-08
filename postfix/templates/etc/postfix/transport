@@ -1,0 +1,3 @@
+# Postfix Transport Map
+# =====================
+<%= postfix_transport_map.join("\n") -%>

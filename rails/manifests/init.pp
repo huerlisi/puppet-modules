@@ -13,6 +13,7 @@ class rails::framework {
 }
 
 class rails::webapp {
+	include rails::framework
 	include apache2::server
 	include passenger::apache2
 }

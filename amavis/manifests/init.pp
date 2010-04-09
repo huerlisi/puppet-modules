@@ -53,5 +53,5 @@ class amavis::virus {
 
 # Unpack helpers
 class amavis::unpackers {
-	package {["bzip2", "lzop", "rpm", "binutils", "p7zip", "rar", "ripole", "cabextract", "arj", "zoo", "lha"]: ensure => installed}
+	package {["bzip2", "lzop", "rpm", "binutils", "p7zip", "unrar-free", "ripole", "cabextract", "arj", "zoo", "arc"]: ensure => installed}
 }

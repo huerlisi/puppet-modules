@@ -28,3 +28,22 @@ class apt::update {
 class apt::unattended-upgrades {
 	package {"unattended-upgrades": ensure => installed}
 }
+
+# Ubuntu PPA
+# ==========
+class apt::ppa::utils {
+	package {"python-software-properties": ensure => installed}
+}
+
+define apt::ppa($user, $repository = 'ppa') {
+	include apt::update
+	include apt::ppa::utils
+
+	exec { "Add PPA '$repository' for '$user'":
+		path        => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+		command     => "add-apt-repository ppa:$user/$repository",
+		require     => Package["python-software-properties"],
+		notify      => Exec["apt-get update"],
+		creates     => "/etc/apt/sources.list.d/$user-$repository-$lsbdistcodename.list"
+	}
+}

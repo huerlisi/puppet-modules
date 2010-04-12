@@ -31,6 +31,8 @@ class apt::unattended-upgrades {
 
 # Ubuntu PPA
 # ==========
+import "ppa-list.pp"
+
 class apt::ppa::utils {
 	package {"python-software-properties": ensure => installed}
 }

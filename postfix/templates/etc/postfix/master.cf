@@ -87,6 +87,13 @@ dovecot   unix  -       n       n       -       -       pipe
   flags=DRhu user=<%= mailbox_user %>:<%= mailbox_group %> argv=/usr/lib/dovecot/deliver -f ${sender} -d ${recipient}
 <% end -%>
 
+<% if has_variable?('mailbox_delivery') and mailbox_delivery == 'zarafa' -%>
+# Zarafa
+# =======
+zarafa  unix    -       n       n       -       10      pipe
+  flags= user=<%= mailbox_user %> argv=/usr/bin/zarafa-dagent ${user}
+<% end -%>
+
 <% if has_variable?('mail_filter') and mail_filter = 'amavis' -%>
 # Amavis
 # ======

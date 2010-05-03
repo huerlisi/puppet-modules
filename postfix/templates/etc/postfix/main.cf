@@ -47,6 +47,16 @@ dovecot_destination_recipient_limit = 1
 virtual_transport = dovecot
 <% end -%>
 
+<% if has_variable?('mailbox_delivery') and mailbox_delivery == 'zarafa' -%>
+# Zarafa
+# ======
+mailbox_transport = zarafa:
+zarafa_destination_limit = 1
+smtp_recipient_limit = 100
+luser_relay = zarafa@<%= mail_domain %>
+<% end -%>
+
+<% if has_variable?('postfix_virtual_domains') and !postfix_virtual_domains.empty? -%>
 # Virtual Domains
 # ===============
 virtual_mailbox_domains = <%= postfix_virtual_domains.join(', ') %>
@@ -55,15 +65,18 @@ virtual_mailbox_maps    = hash:/etc/postfix/vmailbox
 virtual_alias_maps      = hash:/etc/postfix/valiases
 virtual_uid_maps        = hash:/etc/postfix/vuids
 virtual_gid_maps        = hash:/etc/postfix/vgids
+<% end -%>
 
+<% if has_variable?('postfix_relay_domains') and !postfix_relay_domains.empty? -%>
 # Relay Domains
 # =============
-relay_domains  = <%= postfix_relaydomains.join(', ') %>
-<% if postfix_transport_map -%>
+relay_domains  = <%= postfix_relay_domains.join(', ') %>
+<% end -%>
+<% if has_variable?('postfix_transport_map') and !postfix_transport_map.empty? -%>
 transport_maps = hash:/etc/postfix/transport
 <% end -%>
 
-<% if has_variable?('mail_filter') and mail_filter = 'amavis' -%>
+<% if has_variable?('mail_filter') and mail_filter == 'amavis' -%>
 # Content Filtering
 # =================
 content_filter = smtp-amavis:[127.0.0.1]:10024

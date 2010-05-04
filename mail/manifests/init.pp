@@ -10,5 +10,5 @@ class mail::client {
 }
 
 class mail::mailname {
-	file {"/etc/mailname": content => $fqdn}
+	file {"/etc/mailname": content => "$fqdn\n"}
 }

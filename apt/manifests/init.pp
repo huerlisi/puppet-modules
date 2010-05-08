@@ -29,6 +29,13 @@ class apt::unattended-upgrades {
 	package {"unattended-upgrades": ensure => installed}
 }
 
+define apt::deb-list($repository, $distro = $lsbdistcodename, $components) {
+	file { "/etc/apt/sources.list.d/$name.list":
+		content => template("apt/etc/apt/sources.list.d/deb.list"),
+		notify  => Exec["apt-get update"]
+	}
+}
+
 # Ubuntu PPA
 # ==========
 import "ppa-list.pp"

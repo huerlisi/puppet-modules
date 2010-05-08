@@ -1,0 +1,1 @@
+deb <%= repository %> <%= distro %> <%= components.join(" ") %>

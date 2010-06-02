@@ -10,7 +10,7 @@ class apache2::server {
 
 # Apache modules
 # ==============
-define apache2_module() {
+define apache2::module() {
         file { "/etc/apache2/mods-enabled/$title":
                 ensure  => "../mods-available/$title",
                 notify  => Service["apache2"],

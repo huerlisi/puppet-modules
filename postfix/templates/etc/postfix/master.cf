@@ -91,7 +91,7 @@ dovecot   unix  -       n       n       -       -       pipe
 # Zarafa
 # =======
 zarafa  unix    -       n       n       -       10      pipe
-  flags= user=<%= mailbox_user %> argv=/usr/bin/zarafa-dagent ${user}
+  flags= user=zarafa-postfix argv=/usr/bin/zarafa-dagent ${user}
 <% end -%>
 
 <% if has_variable?('mail_filter') and mail_filter = 'amavis' -%>

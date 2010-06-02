@@ -17,6 +17,13 @@ class zarafa::mysql {
 	@@mysql_grant { "zarafa@$hostname.$network/zarafa_$zone": privileges => 'all', tag => "mysql_$db_zone" }
 }
 
+class zarafa::postfix {
+	$mailbox_delivery = 'zarafa'
+	include postfix::server
+
+	user {"zarafa-postfix": ensure => present }
+}
+
 class zarafa::server {
 	include zarafa::apt
 	include zarafa::mysql
@@ -49,3 +56,4 @@ class zarafa::webapp inherits php::apache2 {
 		require => Apt::Deb-list["canonical-lucid-partner"]
 	}
 }
+

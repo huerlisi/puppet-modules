@@ -8,13 +8,13 @@ class zarafa::apt {
 }
 
 class zarafa::mysql {
-	@@mysql_database { "zarafa": ensure => present, tag => "mysql_$zone" }
+	@@mysql_database { "zarafa_$zone": ensure => present, tag => "mysql_$db_zone" }
 	@@mysql_user { "zarafa@$hostname.$network":
 		ensure        => present,
 		password_hash => mysql_password($mysql_password),
-		tag           => "mysql_$zone"
+		tag           => "mysql_$db_zone"
 	}
-	@@mysql_grant { "zarafa@$hostname.$network/zarafa": privileges => 'all', tag => "mysql_$zone" }
+	@@mysql_grant { "zarafa@$hostname.$network/zarafa_$zone": privileges => 'all', tag => "mysql_$db_zone" }
 }
 
 class zarafa::server {

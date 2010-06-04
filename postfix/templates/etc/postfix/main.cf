@@ -32,7 +32,7 @@ myorigin = <%= mail_domain %>
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 mydestination = <%= postfix_mydestinations.join(', ') %>
-relayhost =
+relayhost = <%= mail_relayhost if has_variable?('mail_relayhost') %>
 mynetworks = <%= postfix_mynetworks.join(' ') %>
 mailbox_size_limit = 0
 recipient_delimiter = +

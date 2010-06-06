@@ -24,9 +24,27 @@ class zarafa::postfix {
 	user {"zarafa-postfix": ensure => present }
 }
 
+class zarafa::openldap {
+	include zarafa::server
+
+	file {"/etc/zarafa/ldap.openldap.cfg":
+		ensure => file,
+		content => template("zarafa/etc/zarafa/ldap.openldap.cfg"),
+		require => Package["zarafa"],
+		notify  => Service["zarafa-server"]
+	}
+}
+
 class zarafa::server {
 	include zarafa::apt
 	include zarafa::mysql
+	if $zarafa_ldap {
+		include openldap
+	}
+	$zarafa_user_plugin = $zarafa_ldap ? {
+		true => 'ldap',
+		default => 'db'
+	}
 
 	package {"zarafa":
 		ensure  => installed,

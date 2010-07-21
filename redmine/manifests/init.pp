@@ -25,8 +25,8 @@ class redmine::webapp inherits rails::webapp {
 
 	exec {"Set www-data as owner of environment.rb":
 		command => "sudo dpkg-statoverride --update --add www-data root 644 /usr/share/redmine/config/environment.rb",
-		path        => ["/usr/local/sbin", "/usr/local/bin", "/usr/sbin", "/usr/bin", "/sbin", "/bin"],
-		refreshonly => true,
-		notify      => Service["apache2"]
+		path    => ["/usr/local/sbin", "/usr/local/bin", "/usr/sbin", "/usr/bin", "/sbin", "/bin"],
+		unless  => "dpkg-statoverride --list /usr/share/redmine/config/environment.rb",
+		notify  => Service["apache2"]
 	}
 }

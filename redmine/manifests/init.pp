@@ -1,11 +1,20 @@
 # Redmine
 # =======
+class redmine::mysql {
+	@@mysql_database { "redmine_$zone": ensure => present, tag => "mysql_$db_zone" }
+	@@mysql_user { "redmine@$hostname.$network":
+		ensure        => present,
+		password_hash => mysql_password($mysql_password),
+		tag           => "mysql_$db_zone"
+	}
+	@@mysql_grant { "redmine@$hostname.$network/redmine_$zone": privileges => 'all', tag => "mysql_$db_zone" }
+}
+
 class redmine::webapp inherits rails::webapp {
-	include mysql::server
+	include redmine::mysql
 
 	package {"redmine-mysql":
-		ensure  => installed,
-		require => Package["mysql-server"]
+		ensure  => installed
 	}
 
 	package {"redmine":

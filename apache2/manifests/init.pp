@@ -8,6 +8,22 @@ class apache2::server {
         }
 }
 
+# Apache sites
+# ============
+define apache2::site($template) {
+	file { "/etc/apache2/sites-available/$title":
+		ensure  => file,
+		content => template($template),
+                require => Package["apache2"]
+	}
+
+        file { "/etc/apache2/sites-enabled/$title":
+                ensure  => "../sites-available/$title",
+                notify  => Service["apache2"],
+                require => File["/etc/apache2/sites-available/$title"]
+        }
+}
+
 # Apache modules
 # ==============
 define apache2::module() {

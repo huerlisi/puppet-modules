@@ -10,6 +10,14 @@ class redmine::mysql {
 	@@mysql_grant { "redmine@$hostname.$network/redmine_$zone": privileges => 'all', tag => "mysql_$db_zone" }
 }
 
+class redmine::site {
+	include passenger::apache2
+
+	apache2::site { "redmine":
+		template => "redmine/etc/apache2/sites-available/redmine"
+	}
+}
+
 class redmine::webapp inherits rails::webapp {
 	include redmine::mysql
 

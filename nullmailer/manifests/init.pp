@@ -1,5 +1,10 @@
 # Nullmailer
 # ==========
+#
+# Installs the package nullmailer.
+# Adds the file /etc/nullmailer/remotes with content nullmailer/etc/nullmailer/remotes.
+# Ads the file /etc/nullmailer/adminaddr with content nullmailer/etc/nullmailer/adminaddr.
+#
 class nullmailer::server {
         package {"nullmailer": ensure => installed }
 

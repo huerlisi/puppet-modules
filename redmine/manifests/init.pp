@@ -1,5 +1,8 @@
 # Redmine
 # =======
+#
+# ???
+#
 class redmine::mysql {
 	@@mysql_database { "redmine_$zone": ensure => present, tag => "mysql_$db_zone" }
 	@@mysql_user { "redmine@$hostname.$network":
@@ -10,6 +13,12 @@ class redmine::mysql {
 	@@mysql_grant { "redmine@$hostname.$network/redmine_$zone": privileges => 'all', tag => "mysql_$db_zone" }
 }
 
+#
+# Adds the site redmine with content redmine/etc/apache2/sites-available/redmine to apache.
+# 
+# Requires
+# passenger::apache2
+#
 class redmine::site {
 	include passenger::apache2
 
@@ -18,6 +27,14 @@ class redmine::site {
 	}
 }
 
+#
+# Installs the packages redmine-mysql and redmine
+# Executes sudo dpkg-statoverride --update --add www-data root 644 /usr/share/redmine/config/environment.rb
+# unless dpkg-statoverride --list /usr/share/redmine/config/environment.rb.
+#
+# Requires
+# redmine::mysql
+#
 class redmine::webapp inherits rails::webapp {
 	include redmine::mysql
 

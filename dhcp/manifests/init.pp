@@ -1,5 +1,13 @@
 # DHCP
 # ====
+#
+# Installs the package dhcp3-server.
+# Starts the service dhcp3-server with pattern /usr/sbin/dhcpd3.
+# Creates the file /etc/dhcp3/dhcpd.conf with content dhcp/etc/dhcp3/dhcpd.conf.
+# Creates the directory /etc/dhcp3/dhcpd.conf.d.
+# Creates the file /etc/dhcp3/dhcpd.conf.d/dummy with content 
+# dhcp/etc/dhcp3/dhcpd.conf.d/dummy.
+#
 class dhcp::server {
 	package { "dhcp3-server": ensure => installed }
 

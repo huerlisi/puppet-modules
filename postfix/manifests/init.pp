@@ -1,5 +1,22 @@
 # Postfix
 # =======
+#
+# Includes the Class mail::mailname.
+# Ensures that the packages: postfix and postfix-pcre are installed.
+# Check if the files: /etc/mailname, /etc/postfix/main.cf, /etc/postfix/master.cf
+# and /etc/postfix/transport exist and have the right content.
+#
+# Require:
+#   Packages: postfix
+#
+# Notify:
+#   Service postfix
+#
+# Execute:
+#   postfix transport mapping
+#     /usr/sbin/postmap
+#     /etc/postfix/transport
+#
 class postfix::server {
 	include mail::mailname
 
@@ -44,6 +61,10 @@ class postfix::server {
 
 # Plugins
 # =======
+#
+# Include the class postfix::server.
+# Ensure the package postfix-ldap is installed.
+#
 class postfix::ldap {
 	include server
 	
@@ -52,6 +73,16 @@ class postfix::ldap {
 
 # Configurations
 # ==============
+#
+# Include the class postfix::server.
+#
+# Parameters:
+# $postfix_mydestination
+#
+# $postfix_mynetworks
+#
+# $friend_networks
+#
 class postfix::proxy {
 	$postfix_mydestination = ''
 	$postfix_mynetworks    = $friend_networks

@@ -1,5 +1,10 @@
 # Bind
 # ====
+#
+# Installs package bind9 and checks if the service bind9 is running.
+# Adds pattern named.
+# Adds directory /etc/bind/zones.d
+#
 class bind::server {
         package {"bind9": ensure => installed }
 
@@ -17,6 +22,13 @@ class bind::server {
 
 # Forwarding Proxy
 # ================
+#
+# Adds content from bind/etc/bind/named.conf.options to /etc/bind/named.conf.options.
+# Notifies the service bind9
+#
+# Requires:
+# server
+#
 class bind::proxy {
 	include server
 

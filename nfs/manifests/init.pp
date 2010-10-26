@@ -1,9 +1,16 @@
 # NFS
 # ===
+#
+# Installs the package nfs-common.
+#
 class nfs::client {
         package {"nfs-common": ensure => installed }
 }
 
+#
+# Installs the package nfs-kernel-server
+# Starts the service nfs-kernel-server.
+#
 class nfs::server {
         package {"nfs-kernel-server": ensure => installed }
 	service {"nfs-kernel-server":
@@ -13,6 +20,21 @@ class nfs::server {
 	}
 }
 
+#
+# Starts the service nfs-kernel-server.
+# augeas???
+#
+# Parameters
+# $client
+# Name of the client.
+# $name
+# Name of the file.
+# $dir
+# NFS directory. 
+#
+# Requires
+# nfs::server
+#
 # Exports
 define nfs::export($client) {
 	include nfs::server

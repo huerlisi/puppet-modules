@@ -1,5 +1,12 @@
 # Puppet
 # ======
+#
+# Installs the package puppetmaster.
+# Starts the service puppetmaster.
+# 
+# Requires
+# git::client
+#
 class puppet::server {
 	include git::client
 
@@ -15,6 +22,9 @@ class puppet::server {
 #	}
 }
 
+#
+# ?????
+#
 class puppet::store {
 	import "mysql"
 

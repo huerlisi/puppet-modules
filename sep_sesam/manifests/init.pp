@@ -1,6 +1,17 @@
 # SEP Sesam
 # =========
 
+#
+# Adds the file /etc/apt/sources.list.d/lenny-sep-sesam.list with content
+# sep_sesam/etc/apt/sources.list.d/lenny-sep-sesam.list.
+# Executes apt-get update.
+# Installs the package sesam-cli
+# Adds the file /var/opt/sesam/var/ini/sm_ctrld.auth with content 
+# sep_sesam/var/opt/sesam/var/ini/sm_ctrld.auth.
+#
+# Requires
+# apt::update
+#
 class sep_sesam::client {
 	# TODO: apt-get update
 	file {"/etc/apt/sources.list.d/lenny-sep-sesam.list":

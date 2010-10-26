@@ -1,5 +1,10 @@
 # TFTP
 # ====
+#
+# Installs the package tftpd-hpa.
+# Starts the service tftpd-hpa with pattern /usr/sbin/in.tftpd.
+# Adds the file /etc/default/tftpd-hpa with content tftp/etc/default/tftpd-hpa.
+#
 class tftp::server {
         package { "tftpd-hpa": ensure => installed }
 

@@ -1,5 +1,14 @@
 # Squid
 # =====
+#
+# Installs the package squid.
+# Starts the service squid.
+# Checks if /etc/squid/conf.d is a directory.
+# Adds the file /etc/squid/conf.d/dummy.conf.
+# Adds the file /etc/squid/conf.d/localnet.acl with content squid/etc/squid/conf.d/localnet.acl.
+# Adds the file /etc/squid/conf.d/cache_dir.conf with content squid/etc/squid/conf.d/cache_dir.conf.
+# Adds the file /etc/squid/squid.conf with content squid/etc/squid/squid.conf.
+#
 class squid::server {
 	package {"squid": ensure => installed }
 

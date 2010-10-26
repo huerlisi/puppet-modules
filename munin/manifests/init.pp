@@ -1,5 +1,9 @@
 # Munin
 # =====
+#
+# Installs the package munin.
+# Starts the service munin.
+#
 class munin::server {
         package {"munin": ensure => installed }
         service {"munin":
@@ -8,6 +12,11 @@ class munin::server {
         }
 }
 
+#
+# Installs the package munin-node.
+# Starts the service munin-node.
+# Adds the file /etc/munin/munin-node.conf with content munin/etc/munin/munin-node.conf.
+#
 class munin::client {
         package {"munin-node": ensure => installed }
         service {"munin-node":

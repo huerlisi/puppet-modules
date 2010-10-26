@@ -1,5 +1,12 @@
 # Clamav
 # ======
+#
+# Installs package clamav-daemon.
+# Starts the service clamav-daemon with pattern clamd
+#
+# Requires:
+# clamav::updater
+#
 class clamav::daemon {
 	include clamav::updater
 
@@ -11,7 +18,10 @@ class clamav::daemon {
 		pattern => 'clamd'
 	}
 }
-
+#
+# Installs the package clamav-freshclam.
+# Starts the service clamav-freshclam with the pattern freshclam.
+#
 class clamav::updater {
         package {"clamav-freshclam": ensure => installed }
 

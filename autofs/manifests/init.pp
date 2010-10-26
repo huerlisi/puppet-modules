@@ -1,5 +1,14 @@
 # AutoFS
 # ======
+#
+# Sets the variable autofs_net to /mnt/net.
+# Installs the package autofs.
+# Checks if the service autofs is running.
+# Add content from template autofs/etc/auto.master into /etc/auto.master.
+#
+# Requires:
+# nfs::client
+#
 class autofs::client {
 	$autofs_net = '/mnt/net'
 

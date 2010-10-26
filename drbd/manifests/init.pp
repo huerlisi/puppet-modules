@@ -1,5 +1,18 @@
 # DRBD
 # ====
+#
+# Installs the packages drbd8-utils and drbd8-modules-$kernelrelease
+# Starts the service drbd
+# Adds the file /etc/drbd.d/00-common with content drbd/etc/drbd.d/common
+# Checks if the directories /etc/drbd.d and /etc/drbd.d exists.
+# Executes the Generating /etc/drbd.conf with the needed bin.
+# Executes cat $(run-parts --list /etc/drbd.d) > /etc/drbd.conf
+# Sets refreshonly to true.
+# 
+# Parameters
+# $kernelrelease
+# The actual release of the kernel. 
+#
 class drbd::daemon {
 	package { "drbd8-utils": ensure => installed }
 	package { "drbd8-modules-$kernelrelease": ensure => installed }
@@ -24,6 +37,42 @@ class drbd::daemon {
 	}
 }
 
+#
+# Adds the file /etc/drbd.d/$title with content drbd/etc/drbd.d/resource.conf.
+# Checks if the directory /etc/drbd.d exists.
+# Executes Generating /etc/drbd.conf.
+# Executes drbdadm create-md $title; drbdadm up $title with the condition 
+# drbdadm state $title | grep 'Unconfigured.
+# Needs the package drbd8-utils and the file /etc/drbd.d.
+# 
+#
+# Parameters
+# $device
+# Name of the device.
+# $hostname
+# Name of the host
+# $ip
+# IP of the host.
+# $port
+# ???Portnumber
+# $disk
+# ???
+# $peer_device
+# ???
+# $peer_hostname
+# ???
+# $peer_ip
+# ???
+# $peer_port
+# ???
+# $peer_disk
+# ???
+# $title
+# Name of the drbd file.
+#
+# Requires
+# drbd::daemon
+#
 define drbd::resource($device, $hostname, $ip, $port, $disk, $peer_device = '', $peer_hostname, $peer_ip, $peer_port = '', $peer_disk = '') {
 	include drbd::daemon
 

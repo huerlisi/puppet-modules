@@ -1,5 +1,19 @@
 # Firewall
 # ========
+#
+# Adds the following files with  content:
+# /etc/shorewall/shorewall.conf content $shorewall_module/etc/shorewall/shorewall.conf.
+# /etc/shorewall/interfaces content $shorewall_module/etc/shorewall/interfaces.
+# /etc/shorewall/rules content $shorewall_module/etc/shorewall/rules.
+# /etc/shorewall/masq content $shorewall_module/etc/shorewall/masq.
+# /etc/shorewall/zones content $shorewall_module/etc/shorewall/zones.
+# /etc/shorewall/policy content $shorewall_module/etc/shorewall/policy.
+# /etc/shorewall/routestopped content $shorewall_module/etc/shorewall/routestopped.
+#
+# Parameters
+# $shorewall_module
+# Name of the shorewall module.
+#
 class shorewall::config {
 	file { "/etc/shorewall/shorewall.conf":
 		ensure  => present,
@@ -32,6 +46,14 @@ class shorewall::config {
 	}
 }
 
+#
+# Installs the package shorewall-perl.
+# Adds the file /etc/default/shorewall with content shorewall/etc/default/shorewall.
+# If there is no shorewall module  $shorewall_module = 'shorewall'.
+#
+# Requires
+#  shorewall::config
+#
 class shorewall::daemon {
 	package { "shorewall-perl": ensure => installed }
 

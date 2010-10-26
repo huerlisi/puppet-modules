@@ -1,5 +1,10 @@
 # NTP
 # ===
+#
+# Installs the package ntp.
+# Starts the service ntp.
+# Adds the file /etc/ntp.conf with content ntp/etc/ntp.conf.
+#
 class ntp::client {
         package {"ntp": ensure => installed }
         service {"ntp":
@@ -14,6 +19,10 @@ class ntp::client {
         }
 }
 
+#
+# Requires
+# ntp::client
+#
 class ntp::server {
 	include ntp::client
 }

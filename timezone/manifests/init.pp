@@ -1,5 +1,10 @@
 # Timezone
 # ========
+#
+# Installs the package tzdata.
+# Adds the file /etc/localtime.
+# ???
+#
 class timezone::conf {
 	package { "tzdata": ensure => installed }
 

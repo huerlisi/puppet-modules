@@ -1,5 +1,11 @@
 # Zarafa
 # ======
+#
+# Add the canonical-lucid-partner to the repository list.
+# 
+# Requires
+#   apt::deb-list
+#
 class zarafa::apt {
 	apt::deb-list {"canonical-lucid-partner":
 		repository => "http://archive.canonical.com/ubuntu",
@@ -7,6 +13,22 @@ class zarafa::apt {
 	}
 }
 
+#
+# Ensures that there is a Mysql database, zarafa_$zone and a user zarafa. 
+# It sets the mysql password and grant all needed privileges.
+#
+# Parameters:
+#   $zone:
+#     
+#   $db_zone:
+#     Zone where server is located.
+#   $hostname:
+#     Name of the Host. But just the host and not the domain!
+#   $network:
+#     Name of the domain.
+#   $mysql_password
+#     The mysql password.
+#
 class zarafa::mysql {
 	@@mysql_database { "zarafa_$zone": ensure => present, tag => "mysql_$db_zone" }
 	@@mysql_user { "zarafa@$hostname.$network":
@@ -17,6 +39,15 @@ class zarafa::mysql {
 	@@mysql_grant { "zarafa@$hostname.$network/zarafa_$zone": privileges => 'all', tag => "mysql_$db_zone" }
 }
 
+#
+# Ensures that needed user exists and include the class postfix::server.
+#
+# Parameters:
+#   $mailbox_delivery
+#
+# Requires:
+#   postfix::server
+#
 class zarafa::postfix {
 	$mailbox_delivery = 'zarafa'
 	include postfix::server
@@ -24,8 +55,14 @@ class zarafa::postfix {
 	user {"zarafa-postfix": ensure => present }
 }
 
+#
+# Ensures that the needed file '/etc/zarafa/ldap.openldap.cfg' exists and 
+# include the class zarafa::server. It notifies the Service Zarafa-server and
+# install the package zarafa
+#
 class zarafa::openldap {
 	include zarafa::server
+
 
 	file {"/etc/zarafa/ldap.openldap.cfg":
 		ensure => file,
@@ -35,6 +72,22 @@ class zarafa::openldap {
 	}
 }
 
+#
+# Controlls if all services were running and all packages would be installed.
+# Includes zarafa::apt, zarafa::mysql and openldap.
+# Ensures package zarafa is installed and the service zarafa-server runs.
+# Check if /etc/zarafa/server.cfg exists.
+# Notify the Service zarafa-server.
+#
+# Parameters:
+#   $zarafa_ldap
+#
+#   $zarafa_user_plugin
+#
+# Requires:
+#   - Apt::Deb-list["canonical-lucid-partner"]
+#   - Package["zarafa"]
+#
 class zarafa::server {
 	include zarafa::apt
 	include zarafa::mysql
@@ -66,6 +119,14 @@ class zarafa::server {
 	}
 }
 
+#
+# Checks if zarafa-webaccess is installed.
+# Includes zarafa::apt.
+# Inhertits php:apache2.
+#
+# Requires:
+#   Apt::Deb-list["canonical-lucid-partner"]
+#
 class zarafa::webapp inherits php::apache2 {
 	include zarafa::apt
 

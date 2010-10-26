@@ -1,5 +1,9 @@
 # LDAP
 # ====
+#
+# Checks if /etc/ldap exists and if it is a directory.
+# Adds the file /etc/ldap/ldap.conf with content ldap/etc/ldap/ldap.conf.
+#
 class ldap::client {
 	file {"/etc/ldap": ensure => directory}
 	file {"/etc/ldap/ldap.conf":
@@ -9,11 +13,35 @@ class ldap::client {
 	}
 }
 
+#
+# Installs the package ldap-utils.
+# 
+# Requires
+# ldap::client
+#
 class ldap::utils {
 	include ldap::client
 	package {"ldap-utils": ensure => installed}
 }
 
+#
+# Installs the package slapd.
+# Starts the service slapd.
+# Adds the file /etc/ldap/slapd.conf with content ldap/etc/ldap/slapd.conf and
+# root as owner with group openldap and mode 640.
+# Checks if /etc/ldap/slapd.conf.d is a directory.
+# Adds the file /etc/ldap/slapd.conf.d/options with the content 
+# ldap/etc/ldap/slapd.conf.d/options.
+# Depended on the $lsbdistcodename it creates a file named /etc/default/slapd
+# with content ldap/etc/default/slapd.
+#
+# Parameters
+# $lsbdistcodename
+# Name of the distribution.
+#
+# Requires
+# ldap::utils
+#
 class ldap::server {
         package {"slapd": ensure => installed}
 
@@ -58,6 +86,13 @@ class ldap::server {
 	include ldap::utils
 }
 
+#
+# Installs the packages phpldapadmin and php5-mhash.
+# Checks if the service apache2 is running.
+#
+# Requires
+# apache::server
+#
 class ldap::phpldapadmin {
 	include apache::server
 
@@ -72,6 +107,18 @@ class ldap::phpldapadmin {
 	}
 }
 
+#
+# Installs the package libpam-ldap.
+# Adds the files /etc/pam_ldap.conf and /etc/ldap.conf with content ldap/etc/pam_ldap.conf.
+# Adds the files /etc/pam.d/common-account with content ldap/etc/pam.d/common-account, 
+# /etc/pam.d/common-auth with content ldap/etc/pam.d/common-auth, 
+# /etc/pam.d/common-password with content ldap/etc/pam.d/common-password and 
+# /etc/pam.d/common-session with content ldap/etc/pam.d/common-session.
+#
+# Requires
+# ldap::client
+# ldap::nss
+#
 class ldap::pam {
 	include ldap::client
 	include ldap::nss
@@ -96,6 +143,18 @@ class ldap::pam {
 	}
 }
 
+#
+# Installs the package libnss-ldapd.
+# Starts the service nslcd.
+# Depended on the $lsbdistcodename it creates a file.
+#
+#  Case karmic or lucid
+#  Installs the package nslcd and creates the file /etc/nslcd.conf and /etc/nss-ldapd.conf
+#  with content ldap/etc/nss-ldapd.conf
+#
+#  Case default Creates the file /etc/nss-ldapd.conf with content ldap/etc/nss-ldapd.conf.
+#  
+#
 class ldap::nslcd {
 	case $lsbdistcodename {
 		'karmic', 'lucid': {
@@ -120,6 +179,13 @@ class ldap::nslcd {
 
 }
 
+#
+# Installs the package libnss-ldapd.
+# Creates the file /etc/nsswitch.conf with content ldap/etc/nsswitch.conf.
+#
+# Requires
+# ldap::nslcd
+#
 class ldap::nss {
 	include ldap::nslcd
 

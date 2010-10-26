@@ -1,5 +1,19 @@
 # NIS
 # ===
+#
+# Installs the package nis and libpam-unix2.
+# Starts the service nis with status test -f /var/run/ypbind.pid.
+# Adds the file /etc/yp.conf with content nis/etc/yp.conf.
+# Adds the file /etc/defaultdomain with content $network.
+# Adds the file /etc/pam.d/common-auth with content nis/etc/pam.d/common-auth.
+# Executes /bin/echo '+::::::' >>/etc/passwd.
+# Executes /bin/echo '+:::' >>/etc/group.
+# Executes /bin/echo '+::::::::' >>/etc/shadow.
+#
+# Parameters
+# $network
+# Name of the network.
+#
 class nis::client {
         package {"nis": ensure => installed }
         service {"nis":

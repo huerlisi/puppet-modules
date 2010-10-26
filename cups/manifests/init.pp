@@ -1,5 +1,12 @@
 # CUPS
 # ====
+#
+# Installs the packages cups, hpijs, hpijs-ppds, foomatic-db, 
+# foomatic-db-engine, foomatic-db-hpijs, openprinting-ppds.
+# Starts the service cups.
+# Adds the file /etc/cups/cupsd.conf with the content from cups/etc/cups/cupsd.conf.
+# Notifies the service cups.
+#
 class cups::server {
 	package {["cups", "hpijs", "hpijs-ppds", "foomatic-db", "foomatic-db-engine", "foomatic-db-hpijs", "openprinting-ppds"]: ensure => installed}
 

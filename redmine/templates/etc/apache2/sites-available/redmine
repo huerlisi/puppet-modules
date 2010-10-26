@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+    ServerName redmine.shared.cyt.ch
+
+    RailsEnv production
+    SetEnv X_DEBIAN_SITEID "<%= redmine_site %>"
+    Alias "/plugin_assets/" /var/cache/redmine/<%= redmine_site %>/plugin_assets/
+    
+    DocumentRoot <%= document_root %>
+    
+    <Directory <%= document_root %>>
+        Allow from all
+        Options -MultiViews
+    </Directory>
+</VirtualHost>

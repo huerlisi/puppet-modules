@@ -15,7 +15,7 @@ append_dot_mydomain = no
 # Uncomment the next line to generate "delayed mail" warnings
 #delay_warning_time = 4h
 
-readme_directory = no
+readme_directory = /usr/share/doc/postfix
 
 # TLS parameters
 smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem

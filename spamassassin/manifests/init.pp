@@ -13,7 +13,8 @@ class spamassassin::daemon {
 
 	service {"spamassassin":
 		ensure  => running,
-		require => Package["spamassassin"]
+		require => Package["spamassassin"],
+		pattern => 'spamd'
 	}
 
 	file {"/etc/default/spamassassin":

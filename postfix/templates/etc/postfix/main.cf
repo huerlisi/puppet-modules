@@ -16,16 +16,27 @@ append_dot_mydomain = no
 #delay_warning_time = 4h
 
 readme_directory = /usr/share/doc/postfix
+html_directory = /usr/share/doc/postfix/html
 
+<% if has_variable?('postfix_ssl') and postfix_ssl -%>
 # TLS parameters
-smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
-smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+smtpd_tls_cert_file=/etc/ssl/certs/<%= mail_domain %>.pem
+smtpd_tls_key_file=/etc/ssl/private/<%= mail_domain %>.key
+smtpd_tls_security_level = may
 smtpd_use_tls=yes
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+<% end -%>
 
-# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
-# information on enabling SSL in the smtp client.
+<% if has_variable?('postfix_sasl') and postfix_sasl -%>
+# SASL
+smtpd_tls_auth_only = yes
+smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+smtpd_sender_restrictions = permit_mynetworks, permit_sasl_authenticated
+
+smtpd_sasl_auth_enable = yes
+broken_sasl_auth_clients = yes
+<% end -%>
 
 myhostname = <%= mail_server_fqdn %>
 myorigin = <%= mail_domain %>
@@ -53,7 +64,7 @@ virtual_transport = dovecot
 mailbox_transport = zarafa:
 zarafa_destination_limit = 1
 smtp_recipient_limit = 100
-luser_relay = zarafa@<%= mail_domain %>
+luser_relay = <%= has_variable?('zarafa_relay_user') ? zarafa_relay_user : 'zarafa' %>@<%= mail_domain %>
 <% end -%>
 
 <% if has_variable?('postfix_virtual_domains') and !postfix_virtual_domains.empty? -%>

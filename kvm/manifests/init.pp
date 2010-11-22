@@ -11,3 +11,7 @@ class kvm::console {
                 content => template("kvm/etc/init/ttyS0.conf"),
 	}
 }
+
+class kvm::guest {
+	include kvm::console
+}

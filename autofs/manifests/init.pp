@@ -16,16 +16,16 @@ class autofs::client {
 		ensure => directory
 	}
 
-        package {"autofs": ensure => installed }
+        package {"autofs5": ensure => installed }
         service {"autofs":
                 ensure  => running,
-                require => Package["autofs"]
+                require => Package["autofs5"]
         }
 
         include nfs::client
         file { "/etc/auto.master":
                 content => template('autofs/etc/auto.master'),
                 notify  => Service["autofs"],
-                require => [File[$autofs_net], Package["autofs"]]
+                require => [File[$autofs_net], Package["autofs5"]]
         }
 }

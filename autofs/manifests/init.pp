@@ -19,7 +19,8 @@ class autofs::client {
         package {"autofs5": ensure => installed }
         service {"autofs":
                 ensure  => running,
-                require => Package["autofs5"]
+                require => Package["autofs5"],
+		pattern => 'automount'
         }
 
         include nfs::client

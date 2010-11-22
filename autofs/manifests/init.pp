@@ -12,6 +12,10 @@
 class autofs::client {
 	$autofs_net = '/mnt/net'
 
+	file {$autofs_net:
+		ensure => directory
+	}
+
         package {"autofs": ensure => installed }
         service {"autofs":
                 ensure  => running,
@@ -22,6 +26,6 @@ class autofs::client {
         file { "/etc/auto.master":
                 content => template('autofs/etc/auto.master'),
                 notify  => Service["autofs"],
-                require => Package["autofs"]
+                require => [File[$autofs_net], Package["autofs"]]
         }
 }

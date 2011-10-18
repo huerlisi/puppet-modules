@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+#  Daily cleanup of amavis virus mails
+# 
+
+find /var/lib/amavis/virusmails/ -mtime +2 -type f -exec rm -f {} \;

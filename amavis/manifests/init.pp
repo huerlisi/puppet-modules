@@ -22,6 +22,13 @@ class amavis::daemon {
 		content => template("amavis/etc/amavis/conf.d/50-user"),
 		notify  => Service["amavis"]
 	}
+        file {"/etc/cron.daily/amavisd-cleanup":
+                ensure  => present,
+                content => template("amavis/etc/cron.daily/amavisd-cleanup"),
+		mode    => '755',
+		owner 	=> 'root',
+		group   => 'root'
+        }
 }
 
 # Anti-Spam

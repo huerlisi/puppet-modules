@@ -15,3 +15,7 @@ class kvm::console {
 class kvm::guest {
 	include kvm::console
 }
+
+class kvm::host {
+	package { ['qemu-kvm', 'libvirt-bin']: ensure => installed }
+}

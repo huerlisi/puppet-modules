@@ -42,6 +42,12 @@ class dovecot::server {
 		require => Package["dovecot-common"]
 	}
 
+	user {"vmail":
+		shell => '/bin/false',
+		ensure => present,
+		home   => "/srv/#{mail_domain}/maildir/"
+	}
+
 	if $dovecot_auth {
 		include ldap
 	}

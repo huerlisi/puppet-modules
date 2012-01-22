@@ -57,6 +57,10 @@ class postfix::server {
                         notify  => Exec["postfix transport mapping"]
                 }
 	}
+
+	if $postfix_sasl {
+		include postfix::sasl
+	}
 }
 
 # Plugins
@@ -69,6 +73,28 @@ class postfix::ldap {
 	include server
 	
 	package {"postfix-ldap": ensure => installed}
+}
+
+class postfix::sasl {
+	include sasl::daemon
+
+	file {"/etc/default/saslauthd-postfix_chroot":
+		ensure  => present,
+		content => template("postfix/etc/default/saslauthd"),
+		notify  => Service["saslauthd"],
+	}
+
+	user {"postfix":
+		groups     => 'sasl',
+		require    => [Package["postfix"], Package["sasl2-bin"]],
+		membership => minimum,
+		notify     => Service["postfix"]
+	}
+
+	exec {"dpkg-statoverride --add root sasl 710 /var/spool/postfix/var/run/saslauthd":
+		path   => ["/usr/bin", "/usr/sbin"],
+		unless => "dpkg-statoverride --list root sasl 710 /var/spool/postfix/var/run/saslauthd"
+	}
 }
 
 # Configurations

@@ -156,12 +156,11 @@ class ldap::pam {
 #  
 #
 class ldap::nslcd {
-                package {"nslcd": ensure => installed}
-                file {["/etc/nslcd.conf", "/etc/nss-ldapd.conf"]:
-                        content => template("ldap/etc/nss-ldapd.conf"),
-                        notify  => Service["nslcd"]
-                }
-	}
+        package {"nslcd": ensure => installed}
+        file {["/etc/nslcd.conf", "/etc/nss-ldapd.conf"]:
+                content => template("ldap/etc/nss-ldapd.conf"),
+                notify  => Service["nslcd"]
+        }
 
 	service {"nslcd":
 		ensure  => running,

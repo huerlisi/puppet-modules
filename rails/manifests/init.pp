@@ -8,11 +8,7 @@
 #   - apache2
 #   - passenger
 class rails::framework {
-	package {"rails":
-		ensure => installed
-	}
 }
-
 #
 # Requires
 # rails::framework
@@ -31,12 +27,6 @@ class rails::webapp {
 #
 class rails3::framework {
 	package {"rubygems": ensure => present}
-
-	package {"rails":
-		provider => 'gem',
-		ensure   => '3.0.0.beta4',
-		require  => Package["rubygems"]
-	}
 }
 
 #
@@ -50,4 +40,3 @@ class rails3::webapp {
 	include apache2::server
 	include passenger::apache2
 }
-

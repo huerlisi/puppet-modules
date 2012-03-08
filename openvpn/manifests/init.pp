@@ -55,9 +55,9 @@ class openvpn::client {
 # Requires
 # Apt::Ppa["huerlisi-ppa"]
 #
-class openvpn::ca {
-	package {"easy-rsa":
-		ensure  => installed,
-		require => Apt::Ppa["huerlisi-ppa"]
-	}
-}
+#class openvpn::ca {
+#	package {"easy-rsa":
+#		ensure  => installed,
+#		require => Apt::Ppa["huerlisi-ppa"]
+#	}
+#}

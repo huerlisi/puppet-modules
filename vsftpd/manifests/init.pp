@@ -23,4 +23,6 @@ class vsftpd::server {
 	file {"/etc/pam.d/vsftpd":
 		content => template("vsftpd/etc/pam.d/vsftpd")
 	}
+
+	file {"/var/run/vsftpd": mode => "0550"}
 }

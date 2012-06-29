@@ -51,6 +51,8 @@ inet_interfaces = all
 
 mail_spool_directory = /srv/<%= mail_domain %>/maildir/
 
+message_size_limit = 31457280
+
 <% if has_variable?('mailbox_delivery') and mailbox_delivery == 'dovecot' -%>
 # Dovecot
 # =======

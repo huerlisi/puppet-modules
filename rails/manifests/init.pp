@@ -22,6 +22,7 @@ class rails::framework {
 		require  => Package["ruby1.9.3"]
 	}
 
+	package {"nodejs": ensure => present}
 
 	file { "/srv":
 		ensure => directory,

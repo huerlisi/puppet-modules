@@ -8,7 +8,21 @@ class rails::framework {
         include nginx::server
 	include runit::daemon
 
-	package {"rubygems": ensure => present}
+	package {"ruby1.9.3": ensure => present}
+	package {"build-essential": ensure => present}
+	package {"bundler":
+		ensure   => present,
+		provider => gem,
+		require  => Package["ruby1.9.3"]
+	}
+
+	package {"unicorn":
+		ensure   => present,
+		provider => gem,
+		require  => Package["ruby1.9.3"]
+	}
+
+
 	file { "/srv":
 		ensure => directory,
 		owner  => deployer

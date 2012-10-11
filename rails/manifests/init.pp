@@ -1,42 +1,41 @@
 # Ruby on Rails
 # =============
 
-# Install ruby on rails framework.
-# Installs the package rails.
-#
-# Depends on:
-#   - apache2
-#   - passenger
-class rails::framework {
-}
-#
-# Requires
-# rails::framework
-# apache2::server
-# passenger::apache2
-#
-class rails::webapp {
-	include rails::framework
-	include apache2::server
-	include passenger::apache2
-}
-
 # Rails 3
-# Installs the package rubygems.
-# Installs the 3.0.0.beta4 package of rails.
 #
-class rails3::framework {
-	package {"rubygems": ensure => present}
-}
+class rails::framework {
+        include git::client
+        include nginx::server
+	include runit::daemon
 
-#
-# Requires
-# rails3::framework
-# apache2::server
-# passenger::apache2
-#
-class rails3::webapp {
-	include rails3::framework
-	include apache2::server
-	include passenger::apache2
+	package {"ruby1.9.3": ensure => present}
+	package {"build-essential": ensure => present}
+	package {"bundler":
+		ensure   => present,
+		provider => gem,
+		require  => Package["ruby1.9.3"]
+	}
+
+	package {"unicorn":
+		ensure   => present,
+		provider => gem,
+		require  => Package["ruby1.9.3"]
+	}
+
+	package {"nodejs": ensure => present}
+
+	file { "/srv":
+		ensure => directory,
+		owner  => deployer
+	}
+
+        file { "/etc/nginx/sites-available/rails":
+		content => template('rails/nginx/sites-available/rails'),
+		require  => Package["nginx"],
+		notify   => Service["nginx"]
+	}
+
+	file { "/etc/nginx/sites-enabled/rails":
+		ensure => '../sites-available/rails'
+	}
 }

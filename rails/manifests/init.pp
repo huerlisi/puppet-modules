@@ -9,7 +9,7 @@ class rails::framework {
 	include runit::daemon
 
 	package {"ruby1.9.3": ensure => present}
-	package {"build-essential": ensure => present}
+	package {["build-essential", "ruby1.9.1-dev"]: ensure => present}
 	package {"bundler":
 		ensure   => present,
 		provider => gem,
@@ -19,7 +19,7 @@ class rails::framework {
 	package {"unicorn":
 		ensure   => present,
 		provider => gem,
-		require  => Package["ruby1.9.3"]
+		require  => [Package["ruby1.9.3"], Package["ruby1.9.1-dev"]]
 	}
 
 	package {"nodejs": ensure => present}

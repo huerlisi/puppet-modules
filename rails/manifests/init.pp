@@ -10,6 +10,7 @@ class rails::framework {
 
 	package {"ruby1.9.3": ensure => present}
 	package {["build-essential", "ruby1.9.1-dev"]: ensure => present}
+	package {"rsync": ensure => present}
 	package {"bundler":
 		ensure   => present,
 		provider => gem,

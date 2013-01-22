@@ -23,6 +23,17 @@ class rails::framework {
 		require  => [Package["ruby1.9.3"], Package["ruby1.9.1-dev"]]
 	}
 
+	package {"bluepill":
+		ensure   => present,
+		provider => gem,
+		require  => [Package["ruby1.9.3"]]
+	}
+
+	file { "/var/run/bluepill":
+		ensure => directory,
+		owner  => deployer
+	}
+
 	package {"nodejs": ensure => present}
 
 	file { "/srv":

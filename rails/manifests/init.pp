@@ -6,7 +6,6 @@
 class rails::framework {
         include git::client
         include nginx::server
-	include runit::daemon
 
 	package {"ruby1.9.3": ensure => present}
 	package {["build-essential", "ruby1.9.1-dev"]: ensure => present}

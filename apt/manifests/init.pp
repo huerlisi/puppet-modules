@@ -74,10 +74,6 @@ define apt::deb-list($repository, $distro = $lsbdistcodename, $components) {
 
 # Ubuntu PPA
 # ==========
-#
-# Includes the file ppa-list.pp.
-#
-import "ppa-list.pp"
 
 #
 # Installs the package python-software-properties.

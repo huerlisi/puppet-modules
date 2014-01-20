@@ -15,6 +15,7 @@ class puppet::server {
 		ensure  => running,
 		require => Package["puppetmaster"]
 	}
+  package { "vim-puppet": ensure => installed }
 
 #	file { "/etc/puppet/fileserver.conf":
 #		ensure  => file,

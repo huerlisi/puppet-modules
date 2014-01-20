@@ -12,11 +12,11 @@ class locales::conf {
 		path        => ["/usr/local/sbin", "/usr/local/bin", "/usr/sbin", "/usr/bin", "/sbin", "/bin"],
                 command     => "locale-gen",
                 refreshonly => true,
-		subscribe   => File["/etc/locale.gen"],
+		subscribe   => File["/var/lib/locales/supported.d/puppet"],
 		require     => Package["locales"]
         }
 
-	file { "/etc/locale.gen":
+	file { "/var/lib/locales/supported.d/puppet":
 		ensure  => file,
 		content => template("locales/etc/locale.gen")
 	}

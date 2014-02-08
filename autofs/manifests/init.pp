@@ -10,23 +10,21 @@
 # nfs::client
 #
 class autofs::client {
-	$autofs_net = '/mnt/net'
+  $autofs_net = '/mnt/net'
 
-	file {$autofs_net:
-		ensure => directory
-	}
+  file { $autofs_net: ensure => directory } ~>
 
-        package {"autofs5": ensure => installed }
-        service {"autofs":
-                ensure  => running,
-                require => Package["autofs5"],
-		pattern => 'automount'
-        }
+  package {"autofs5": ensure => installed } ->
+  service {"autofs":
+    ensure  => running,
+    require => Package["autofs5"],
+    pattern => 'automount'
+  }
 
-        include nfs::client
-        file { "/etc/auto.master":
-                content => template('autofs/etc/auto.master'),
-                notify  => Service["autofs"],
-                require => [File[$autofs_net], Package["autofs5"]]
-        }
+  include nfs::client
+  file { "/etc/auto.master":
+    content => template('autofs/etc/auto.master'),
+    notify  => Service["autofs"],
+    require => [File[$autofs_net], Package["autofs5"]]
+  }
 }

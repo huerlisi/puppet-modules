@@ -6,16 +6,11 @@
 # Adds directory /etc/bind/zones.d
 #
 class bind::server {
-        package {"bind9": ensure => installed }
+  package {"bind9": ensure => installed }
 
 	service {"bind9":
 		ensure  => running,
 		pattern => 'named',
-		require => Package["bind9"]
-	}
-
-	file {"/etc/bind/zones.d":
-		ensure  => directory,
 		require => Package["bind9"]
 	}
 }

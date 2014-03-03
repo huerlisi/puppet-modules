@@ -1,0 +1,20 @@
+// Business Clients
+// ================
+
+<%- @zones.each do |zone| -%>
+zone "<%= zone %>" {
+  type <%= @type %>;
+  file "<%= zone %>.db";
+
+  <%- if @type == 'master' -%>
+  allow-transfer {
+		cyt_ns_hosts;
+  };
+  <%- elsif @type == 'slave' -%>
+  masters {
+    <%= @master_ip %>;
+  };
+  <%- end -%>
+};
+
+<%- end -%>

@@ -7,6 +7,13 @@
 class openvpn::server {
 	package {"openvpn": ensure => installed }
 
+  exec { "Generating DH parameters":
+    path    => ["/usr/sbin", "/usr/bin", "/sbin", "/bin"],
+    command => "openssl dhparam -out /etc/openvpn/dh2048.pem 2048",
+    creates => "/etc/openvpn/dh2048.pem",
+    notify  => Service["openvpn"]
+  }
+
 	service {"openvpn":
 		ensure  => running,
 		require => Package["openvpn"]

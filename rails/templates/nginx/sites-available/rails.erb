@@ -4,11 +4,15 @@ server {
 
   keepalive_timeout 5;
 
+<%- if default_hostname -%>
+  set $host_without_www '<%= default_hostname %>';
+<%- else -%>
   # Drop leading www.
   set $host_without_www $host;
   if ($host ~ ^www\.(.*)$ ) {
     set $host_without_www $1;
   }
+<%- end -%>
 
   # Location of our static files
   root /srv/$host_without_www/current/public;

@@ -3,7 +3,7 @@
 
 # Rails 3
 #
-class rails::framework {
+class rails::framework($default_hostname = false) {
   include git::client
   include nginx::server
   include mysql::client
@@ -42,7 +42,7 @@ class rails::framework {
 	}
 
   file { "/etc/nginx/sites-available/rails":
-		content => template('rails/nginx/sites-available/rails'),
+		content => template('rails/nginx/sites-available/rails.erb'),
 		require  => Package["nginx"],
 		notify   => Service["nginx"]
 	}

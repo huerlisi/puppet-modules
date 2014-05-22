@@ -25,6 +25,11 @@ class apt::client {
 	file {"/etc/apt/apt.conf.d/no-install-recommends":
 		content => template("apt/etc/apt/apt.conf.d/no-install-recommends")
 	}
+
+  package {["apticron", "apt-listchanges", "unattended-upgrades"]: ensure => installed }
+  file {"/etc/apt/apt.conf.d/02periodic":
+		content => template("apt/etc/apt/apt.conf.d/02periodic")
+  }
 }
 
 #
@@ -36,13 +41,6 @@ class apt::update {
 		refreshonly => true,
 		timeout     => "-1"
 	}
-}
-
-#
-# Installs unattended-upgrades.
-#
-class apt::unattended-upgrades {
-	package {"unattended-upgrades": ensure => installed}
 }
 
 #

@@ -1,0 +1,9 @@
+/srv/*/current/log/*.log {
+        daily
+        missingok
+        rotate 52
+        compress
+        copytruncate
+        notifempty
+        dateext
+}

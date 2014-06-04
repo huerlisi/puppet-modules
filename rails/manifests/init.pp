@@ -1,15 +1,14 @@
 # Ruby on Rails
 # =============
-
-# Rails 3
 #
+# Rails 3
+
 class rails::framework($default_hostname = false) {
-  include git::client
   include nginx::server
   include mysql::client
 
 	package {"ruby1.9.3": ensure => present}
-	package {["build-essential", "ruby1.9.1-dev"]: ensure => present}
+	package {["build-essential", "ruby1.9.1-dev", "libssl-dev"]: ensure => present}
 	package {"rsync": ensure => present}
 	package {"bundler":
 		ensure   => present,
@@ -34,8 +33,6 @@ class rails::framework($default_hostname = false) {
 		owner  => deployer
 	}
 
-	package {"nodejs": ensure => present}
-
 	file { "/srv":
 		ensure => directory,
 		owner  => deployer
@@ -50,4 +47,12 @@ class rails::framework($default_hostname = false) {
 	file { "/etc/nginx/sites-enabled/rails":
 		ensure => '../sites-available/rails'
 	}
+
+	file { "/etc/nginx/sites-enabled/default": ensure => absent }
+
+	package {["nodejs", "libpq-dev", "libmysqlclient-dev", "libsqlite3-dev", "libxml2-dev", "libxslt1-dev", "libmagickcore-dev", "libmagickwand-dev", "gawk", "sphinxsearch", "catdoc"]: ensure => present}
+
+  file { "/etc/logrotate.d/rails":
+    content => template('rails/etc/logrotate.d/rails')
+  }
 }

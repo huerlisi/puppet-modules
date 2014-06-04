@@ -22,6 +22,12 @@ class rails::framework($default_hostname = false) {
 		require  => [Package["ruby1.9.3"], Package["ruby1.9.1-dev"]]
 	}
 
+	package {"foreman":
+		ensure   => present,
+		provider => gem,
+		require  => [Package["ruby1.9.3"]]
+	}
+
 	package {"bluepill":
 		ensure   => present,
 		provider => gem,

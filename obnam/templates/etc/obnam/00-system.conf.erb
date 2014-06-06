@@ -1,7 +1,9 @@
 [config]
-one-file-system = yes
-root            = /
-exclude         = /tmp,/var/tmp,/var/cache
 repository      = sftp://obnam@backup01.infra/srv/backups/infra
+compress-with   = deflate
+keep            = 7d,15w,24m,20y
+exclude         = /tmp,/var/tmp,/var/cache
+exclude-caches  = true
 client-name     = <%= fqdn.split(".")[0..1].join(".") %>
 ssh-key         = /etc/obnam/id_rsa.obnam
+ssh-known-hosts = /etc/obnam/known_hosts

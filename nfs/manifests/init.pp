@@ -4,7 +4,17 @@
 # Installs the package nfs-common.
 #
 class nfs::client {
-        package {"nfs-common": ensure => installed }
+  package {"nfs-common": ensure => installed } ~>
+
+  service {"gssd":
+    require => Package["nfs-common"]
+  }
+
+  file { "/etc/default/nfs-common":
+    content => template('nfs/etc/default/nfs-common'),
+    require => Package["nfs-common"],
+    notify  => Service["gssd"]
+  }
 }
 
 #

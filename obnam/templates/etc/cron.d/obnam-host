@@ -16,4 +16,4 @@ HOME=/
 
 OBNAM="obnam --config /etc/obnam/host.profile"
 00 02 * * * root $OBNAM backup || ( $OBNAM force-lock && $OBNAM backup )                                        
-30 02 * * * root $OBNAM forget
+30 01 * * * root $OBNAM forget

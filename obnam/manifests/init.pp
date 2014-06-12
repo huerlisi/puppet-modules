@@ -31,8 +31,11 @@ class obnam::client($id_rsa = undef, $known_hosts = undef) {
   }
 
   # Scheduler
+  $cron_minute = fqdn_rand(60)
+  $cron_hour = fqdn_rand(4)
+
   file { '/etc/cron.d/obnam-host':
-    content => template('obnam/etc/cron.d/obnam-host'),
+    content => template('obnam/etc/cron.d/obnam-host.erb'),
     require => File['/etc/obnam']
   }
 }

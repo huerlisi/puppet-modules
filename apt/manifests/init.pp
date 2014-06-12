@@ -30,6 +30,9 @@ class apt::client {
   file {"/etc/apt/apt.conf.d/02periodic":
 		content => template("apt/etc/apt/apt.conf.d/02periodic")
   }
+  file {"/etc/apt/apt.conf.d/50unattended-upgrades":
+		content => template("apt/etc/apt/apt.conf.d/50unattended-upgrades")
+  }
 }
 
 #

@@ -7,6 +7,6 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
 MAILTO=root
 HOME=/
 
-OBNAM="obnam --config /etc/obnam/host.profile"
+OBNAM="obnam --quiet --config /etc/obnam/host.profile"
 <%= cron_minute %> 22 * * * root $OBNAM forget
 <%= cron_minute %> <%= cron_hour %> * * * root $OBNAM backup

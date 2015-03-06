@@ -26,7 +26,8 @@ class apt::client {
 		content => template("apt/etc/apt/apt.conf.d/no-install-recommends")
 	}
 
-  package {["apticron", "apt-listchanges", "unattended-upgrades"]: ensure => installed }
+  package {["apticron", "apt-listchanges"]: ensure => purged }
+  package {["unattended-upgrades"]: ensure => installed }
   file {"/etc/apt/apt.conf.d/02periodic":
 		content => template("apt/etc/apt/apt.conf.d/02periodic")
   }

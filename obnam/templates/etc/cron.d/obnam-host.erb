@@ -8,5 +8,4 @@ MAILTO=root
 HOME=/
 
 OBNAM="obnam --quiet --config /etc/obnam/host.profile"
-<%= cron_minute %> 22 * * * root $OBNAM forget
-<%= cron_minute %> <%= cron_hour %> * * * root $OBNAM backup
+<%= cron_minute %> <%= cron_hour %> * * * root $OBNAM backup && $OBNAM forget

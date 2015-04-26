@@ -1,5 +1,14 @@
 # Obnam Backup
 
+class obnam::server {
+  user { 'obnam':
+    ensure => present,
+    comment => 'Obnam Backup',
+    home    => '/srv/backups',
+    password => '*'
+  }
+}
+
 class obnam::client($repository, $id_rsa = undef, $known_hosts = undef) {
   package { 'obnam': ensure => installed }
 

@@ -9,6 +9,10 @@ class rails::framework($default_hostname = false) {
 
 	package {"ruby1.9.3": ensure => present}
 	package {["build-essential", "ruby1.9.1-dev", "libssl-dev"]: ensure => present}
+
+  # for capistrano-rbenv
+  package {["lsb-release", "lsb-core", "libffi-dev"]: ensure => present}
+
 	package {"rsync": ensure => present}
 	package {"bundler":
 		ensure   => present,

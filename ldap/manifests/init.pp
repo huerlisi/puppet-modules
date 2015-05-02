@@ -72,17 +72,13 @@ class ldap::server {
 		notify  => Service["slapd"]
 	}
 
-	case $lsbdistcodename {
-		'intrepid', 'karmic': {
-                        file {"/etc/default/slapd":
-                                ensure  => file,
-                                content => template("ldap/etc/default/slapd"),
-                                require => Package["slapd"],
-                                notify  => Service["slapd"]
-                        }
-		}
+  file {"/etc/default/slapd":
+    ensure  => file,
+    content => template("ldap/etc/default/slapd"),
+    require => Package["slapd"],
+    notify  => Service["slapd"]
+  }
 
-	}
 	include ldap::utils
 }
 

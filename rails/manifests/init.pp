@@ -60,7 +60,7 @@ class rails::framework($default_hostname = false) {
 
 	file { "/etc/nginx/sites-enabled/default": ensure => absent }
 
-	package {["nodejs", "libpq-dev", "libmysqlclient-dev", "libsqlite3-dev", "libxml2-dev", "libxslt1-dev", "libmagickcore-dev", "libmagickwand-dev", "gawk", "sphinxsearch", "catdoc"]: ensure => present}
+	package {["nodejs", "libpq-dev", "libmysqlclient-dev", "libsqlite3-dev", "libxml2-dev", "libxslt1-dev", "libmagickcore-dev", "libmagickwand-dev", "imagemagick", "gawk", "sphinxsearch", "catdoc", "libcups2-dev", "libcups2", "ttf-dejavu"]: ensure => present}
 
   file { "/etc/logrotate.d/rails":
     content => template('rails/etc/logrotate.d/rails')

@@ -36,7 +36,7 @@ class rails::framework($default_hostname = false) {
 	package {"bluepill":
 		ensure   => present,
 		provider => gem,
-		require  => [Package["ruby1.9.3"]]
+		require  => [Package["ruby1.9.3"], Package["ruby1.9.1-dev"]]
 	}
 
 	file { "/var/run/bluepill":

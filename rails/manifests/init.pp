@@ -6,6 +6,7 @@
 class rails::framework($default_hostname = false) {
   include nginx::server
   include mysql::client
+  include git::client
 
 	package {"ruby1.9.3": ensure => present}
 	package {["build-essential", "ruby1.9.1-dev", "libssl-dev"]: ensure => present}

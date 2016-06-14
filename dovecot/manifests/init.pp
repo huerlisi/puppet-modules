@@ -11,7 +11,7 @@ class dovecot::ldap {
 		ensure  => present,
 		content => template("dovecot/etc/dovecot/dovecot-ldap.conf"),
 		notify  => Service["dovecot"],
-		require => Package["dovecot-common"]
+		require => Package["dovecot-core"]
 	}
 }
 
@@ -28,24 +28,24 @@ class dovecot::ldap {
 # ldap
 #
 class dovecot::server {
-        package {"dovecot-common": ensure => installed }
+  package {"dovecot-core": ensure => installed }
 
 	service {"dovecot":
 		ensure  => running,
-		require => Package["dovecot-common"]
+		require => Package["dovecot-core"]
 	}
 
 	file {"/etc/dovecot/dovecot.conf":
 		ensure  => present,
 		content => template("dovecot/etc/dovecot/dovecot.conf"),
 		notify  => Service["dovecot"],
-		require => Package["dovecot-common"]
+		require => Package["dovecot-core"]
 	}
 
 	user {"vmail":
 		shell => '/bin/false',
 		ensure => present,
-		home   => "/srv/#{mail_domain}/maildir/"
+		home   => "/srv/${mail_domain}/maildir/"
 	}
 
 	if $dovecot_auth {

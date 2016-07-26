@@ -81,6 +81,14 @@ zone "184/29.141.109.77.in-addr.arpa" {
   };
 };
 
+zone "128-25.150.109.77.in-addr.arpa" {
+  type slave;
+  file "77.109.150.128-25.rev";
+  masters {
+    77.109.141.213;
+  };
+};
+
 
 // Public
 // ======

@@ -9,7 +9,7 @@ class obnam::server {
   }
 }
 
-class obnam::client($repository, $id_rsa = undef, $known_hosts = undef) {
+class obnam::client($repository, $id_rsa = undef, $known_hosts = undef, $excludes = []) {
   package { 'obnam': ensure => installed }
 
   file { '/etc/obnam': ensure => directory }

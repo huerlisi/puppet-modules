@@ -1,16 +1,18 @@
-// Business Clients
-// ================
+// Basic Domains
+// =============
 
-<%- @zones.each do |zone| -%>
+<%- @basic_zones.each do |zone| -%>
 zone "<%= zone %>" {
   type <%= @type %>;
-  file "<%= zone %>.db";
-
   <%- if @type == 'master' -%>
+  file "zones.d/basic.db";
+
   allow-transfer {
-		cyt_ns_hosts;
+		slaves;
   };
   <%- elsif @type == 'slave' -%>
+  file "<%= zone %>.db";
+
   masters {
     <%= @master_ip %>;
   };

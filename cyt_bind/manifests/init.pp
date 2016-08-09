@@ -2,11 +2,20 @@
 # ========
 # Configure a DNS server using bind to provide internal and external name resolution.
 
-class cyt_bind::server($type = 'slave') {
+class cyt_bind::server {
   $directory = '/etc/bind/zones.d'
-  $master_ip = '77.109.141.213'
 
-  $zones = $bind_zones
+  $type = $bind_type
+
+  $master_ip = $bind_master_ip
+  $slave_ips = $bind_slave_ips
+
+  $custom_zones = $bind_custom_zones
+  $basic_zones = $bind_basic_zones
+
+  $internal_master_ip = $bind_internal_master_ip
+  $internal_slave_ips = $bind_internal_slave_ips
+  $internal_zones = $bind_internal_zones
 
   include bind::server
 
@@ -20,13 +29,18 @@ class cyt_bind::server($type = 'slave') {
 		require => Package["bind9"]
 	}
 
-  file { "/etc/bind/zones.cyt.ch":
-    content => template("cyt_bind/etc/bind/zones.cyt.ch.erb"),
+  file { "/etc/bind/zones.custom":
+    content => template("cyt_bind/etc/bind/zones.custom.erb"),
     notify  => Service["bind9"],
   }
 
-  file { "/etc/bind/zones.clients":
-    content => template("cyt_bind/etc/bind/zones.clients.erb"),
+  file { "/etc/bind/zones.basic":
+    content => template("cyt_bind/etc/bind/zones.basic.erb"),
+    notify  => Service["bind9"],
+  }
+
+  file { "/etc/bind/zones.internal":
+    content => template("cyt_bind/etc/bind/zones.internal.erb"),
     notify  => Service["bind9"],
   }
 }

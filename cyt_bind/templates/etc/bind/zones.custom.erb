@@ -1,0 +1,27 @@
+// ACLs
+// ====
+acl "slaves" { <%= @slave_ips.map{|ip| ip + ';'}.join(' ') %> };
+
+// Reverse PUBLIC IP
+// =================
+<%- @custom_zones.each do |zone| -%>
+zone "<%= zone %>" {
+  type <%= @type %>;
+
+  <%- if @type == 'master' -%>
+  file "zones.d/<%= zone.tr('/', '-') %>.db";
+
+  allow-transfer {
+    slaves;
+  };
+
+  <%- elsif @type == 'slave' -%>
+  file "<%= zone.tr('/', '-') %>.db";
+
+  masters {
+    <%= @master_ip %>;
+  };
+  <%- end -%>
+};
+
+<%- end -%>

@@ -1,0 +1,31 @@
+// ACLs
+// ====
+acl "internal_net" { 127.0.0.0/8; 10.0.0.0/8; };
+acl "internal_slaves" { <%= @internal_slave_ips.map{|ip| ip + ';'}.join(' ') %> };
+
+// Internal
+// ========
+<%- @internal_zones.each do |zone| -%>
+zone "<%= zone %>" {
+  type <%= @type %>;
+
+  allow-query {
+    internal_net;
+  };
+
+  <%- if @type == 'master' -%>
+  file "zones.d/<%= zone %>.db";
+
+  allow-transfer {
+    internal_slaves;
+  };
+  <%- elsif @type == 'slave' -%>
+  file "<%= zone %>.db";
+
+  masters {
+    <%= @internal_master_ip %>;
+  };
+  <%- end -%>
+};
+
+<%- end -%>

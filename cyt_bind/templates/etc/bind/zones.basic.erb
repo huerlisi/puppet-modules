@@ -5,10 +5,10 @@
 zone "<%= zone %>" {
   type <%= @type %>;
   <%- if @type == 'master' -%>
-  file "zones.d/basic.db";
+  file "/etc/bind/zones.d/basic.db";
 
   allow-transfer {
-		slaves;
+    slaves;
   };
   <%- elsif @type == 'slave' -%>
   file "<%= zone %>.db";

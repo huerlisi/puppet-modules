@@ -9,7 +9,7 @@ zone "<%= zone %>" {
   type <%= @type %>;
 
   <%- if @type == 'master' -%>
-  file "zones.d/<%= zone.tr('/', '-') %>.db";
+  file "/etc/bind/zones.d/<%= zone.tr('/', '-') %>.db";
 
   allow-transfer {
     slaves;

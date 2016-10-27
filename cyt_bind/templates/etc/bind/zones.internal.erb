@@ -14,7 +14,7 @@ zone "<%= zone %>" {
   };
 
   <%- if @type == 'master' -%>
-  file "zones.d/<%= zone %>.db";
+  file "/etc/bind/zones.d/<%= zone %>.db";
 
   allow-transfer {
     internal_slaves;

@@ -9,3 +9,4 @@ HOME=/
 
 OBNAM="obnam --quiet --config /etc/obnam/host.profile"
 <%= cron_minute %> <%= cron_hour %> * * * root $OBNAM backup && $OBNAM forget
+0 13 * * * root $OBNAM force-lock

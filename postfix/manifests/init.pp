@@ -58,6 +58,20 @@ class postfix::server {
     }
 	}
 
+	if $postfix_sender_map {
+		exec {"postfix sender mapping":
+			command     => "/usr/sbin/postmap /etc/postfix/sender_dependant_default_transport",
+			require     => Package["postfix"],
+			refreshonly => true
+		}
+    file {"/etc/postfix/sender_dependant_default_transport":
+            ensure  => present,
+            content => template("postfix/etc/postfix/sender_dependant_default_transport"),
+            require => Package["postfix"],
+            notify  => Exec["postfix sender mapping"]
+    }
+	}
+
 	if $postfix_sasl {
 		include postfix::sasl
 	}

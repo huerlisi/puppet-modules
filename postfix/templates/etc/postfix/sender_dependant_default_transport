@@ -1,0 +1,3 @@
+# Postfix Sender Map
+# ==================
+<%= postfix_sender_map.join("\n") -%>

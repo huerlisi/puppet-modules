@@ -88,6 +88,9 @@ relay_domains  = <%= postfix_relay_domains.join(', ') %>
 <% if has_variable?('postfix_transport_map') and !postfix_transport_map.empty? -%>
 transport_maps = hash:/etc/postfix/transport
 <% end -%>
+<% if has_variable?('postfix_sender_map') and !postfix_sender_map.empty? -%>
+sender_dependent_default_transport_maps = hash:/etc/postfix/sender_dependant_default_transport
+<% end -%>
 
 <% if has_variable?('mail_filter') and mail_filter == 'amavis' -%>
 # Content Filtering

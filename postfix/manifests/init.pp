@@ -50,12 +50,12 @@ class postfix::server {
 			require     => Package["postfix"],
 			refreshonly => true
 		}
-                file {"/etc/postfix/transport":
-                        ensure  => present,
-                        content => template("postfix/etc/postfix/transport"),
-                        require => Package["postfix"],
-                        notify  => Exec["postfix transport mapping"]
-                }
+    file {"/etc/postfix/transport":
+            ensure  => present,
+            content => template("postfix/etc/postfix/transport"),
+            require => Package["postfix"],
+            notify  => Exec["postfix transport mapping"]
+    }
 	}
 
 	if $postfix_sasl {
